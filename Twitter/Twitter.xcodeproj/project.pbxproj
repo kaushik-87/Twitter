@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		65844CDCBACCA94A156D6011 /* Pods_Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3945B40F03C0D10BD724C64F /* Pods_Twitter.framework */; };
+		D73648711F7B7E170088C79A /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D73648701F7B7E170088C79A /* TwitterClient.swift */; };
 		D7CAECB81F7B77090046DC18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CAECB71F7B77090046DC18 /* AppDelegate.swift */; };
 		D7CAECBA1F7B77090046DC18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CAECB91F7B77090046DC18 /* ViewController.swift */; };
 		D7CAECBD1F7B77090046DC18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7CAECBB1F7B77090046DC18 /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 		9BAFFDB5A16F95F062B71B68 /* Pods-Twitter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter.release.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter/Pods-Twitter.release.xcconfig"; sourceTree = "<group>"; };
 		C6484A8A3CA739E5DCFDCF83 /* Pods-Twitter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Twitter.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Twitter/Pods-Twitter.debug.xcconfig"; sourceTree = "<group>"; };
 		D20B3A3C9D4F69CFFD25DA60 /* Pods-TwitterUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TwitterUITests/Pods-TwitterUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D73648701F7B7E170088C79A /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		D7CAECB41F7B77090046DC18 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7CAECB71F7B77090046DC18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7CAECB91F7B77090046DC18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -112,6 +114,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		D736486D1F7B7BAE0088C79A /* API */ = {
+			isa = PBXGroup;
+			children = (
+				D73648701F7B7E170088C79A /* TwitterClient.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
 		D7CAECAB1F7B77090046DC18 = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +147,7 @@
 		D7CAECB61F7B77090046DC18 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				D736486D1F7B7BAE0088C79A /* API */,
 				D7CAECB71F7B77090046DC18 /* AppDelegate.swift */,
 				D7CAECB91F7B77090046DC18 /* ViewController.swift */,
 				D7CAECBB1F7B77090046DC18 /* Main.storyboard */,
@@ -447,6 +458,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7CAECBA1F7B77090046DC18 /* ViewController.swift in Sources */,
+				D73648711F7B7E170088C79A /* TwitterClient.swift in Sources */,
 				D7CAECB81F7B77090046DC18 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -700,6 +712,7 @@
 				D7CAECDE1F7B77090046DC18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D7CAECDF1F7B77090046DC18 /* Build configuration list for PBXNativeTarget "TwitterTests" */ = {
 			isa = XCConfigurationList;
@@ -708,6 +721,7 @@
 				D7CAECE11F7B77090046DC18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D7CAECE21F7B77090046DC18 /* Build configuration list for PBXNativeTarget "TwitterUITests" */ = {
 			isa = XCConfigurationList;
@@ -716,6 +730,7 @@
 				D7CAECE41F7B77090046DC18 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
