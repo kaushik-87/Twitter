@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("current user detected \(User.currentUser?.name)")
             
             let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
-            window?.rootViewController = vc
+            let navController = UINavigationController(rootViewController: vc)
+            window?.rootViewController = navController
         }
         return true
     }
