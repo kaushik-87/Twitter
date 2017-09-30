@@ -23,6 +23,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
 
     @IBOutlet weak var tweetsTableView: UITableView!
 
@@ -56,14 +58,24 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         User.currentUser?.logout()
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "tweetDetail") {
+            
+            let vc = segue.destination as! TweetDetailViewController
+            if let cell = sender as? TimelineTweetCell{
+                if let indesPath = self.tweetsTableView.indexPath(for: cell) {
+                    vc.tweet = self.tweets?[indesPath.row]
+                }
+            }
+        }
     }
-    */
+ 
 
 }
