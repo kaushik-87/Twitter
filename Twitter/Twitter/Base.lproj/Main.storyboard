@@ -180,6 +180,8 @@
                                             <outlet property="replyButton" destination="0wk-yg-BcU" id="0PZ-yN-Ngv"/>
                                             <outlet property="retweetButton" destination="kWE-79-eR1" id="sX6-gI-l89"/>
                                             <outlet property="retweetImageView" destination="WuB-gg-I3C" id="ndB-gC-5uV"/>
+                                            <outlet property="retweetImgConstraint" destination="x1e-Hp-kRh" id="GRK-jh-vGv"/>
+                                            <outlet property="retweetLabelHeightConstraint" destination="A0r-xB-zaW" id="ni6-4i-5FI"/>
                                             <outlet property="retweetedLabel" destination="jUe-XZ-1YM" id="R2p-k0-ZMv"/>
                                             <outlet property="tweetTextView" destination="Vrg-T8-qtX" id="ixb-1Y-2CV"/>
                                             <outlet property="tweetTimeLabel" destination="U2z-0q-UM2" id="4PQ-Qx-JeH"/>

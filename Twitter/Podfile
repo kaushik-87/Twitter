@@ -9,6 +9,7 @@ target 'Twitter' do
   pod 'AFNetworking', '~> 3.0'
   pod “BDBOAuth1Manager”
   pod 'SwiftyJSON'
+  pod 'NSDateMinimalTimeAgo', '~> 0.1.0'
 
   target 'TwitterTests' do
     inherit! :search_paths

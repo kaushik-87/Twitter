@@ -8,6 +8,7 @@
 
 import UIKit
 import AFNetworking
+import NSDateMinimalTimeAgo
 
 class TimelineTweetCell: UITableViewCell {
 
@@ -22,14 +23,25 @@ class TimelineTweetCell: UITableViewCell {
     @IBOutlet weak var retweetImageView: UIImageView!
     @IBOutlet weak var retweetedLabel: UILabel!
     
+    @IBOutlet weak var retweetLabelHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var retweetImgConstraint: NSLayoutConstraint!
     var tweet: Tweet? {
         didSet {
+            
+            self.retweetLabelHeightConstraint.constant = 0
+            self.retweetImgConstraint.constant = 0
+            
+            
             self.userNameLabel.text = tweet?.user?.name
             if let imgURL = tweet?.user?.profileImageUrl {
                 self.userIconImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
             self.tweetTextView.text = tweet?.text
             self.userTweetHandlerLabel.text = "@"+(tweet?.user?.screenName)!
+            
+            let date = tweet?.createdAt
+            let dateInStr = date?.timeAgo()
+            self.tweetTimeLabel.text = dateInStr
             
         }
     }
