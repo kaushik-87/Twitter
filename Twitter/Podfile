@@ -7,7 +7,7 @@ target 'Twitter' do
 
   # Pods for Twitter
   pod 'AFNetworking', '~> 3.0'
-  pod “BDBOAuth1Manager”
+  pod 'BDBOAuth1Manager'
   pod 'SwiftyJSON'
   pod 'NSDateMinimalTimeAgo', '~> 0.1.0'
 

@@ -38,12 +38,19 @@ class TweetDetailViewController: UIViewController {
         super.viewDidLoad()
 
         self.userProfileImageView.layer.cornerRadius = 0.5 * self.userProfileImageView.frame.width
+        
+        let rightBarbutton = UIBarButtonItem(image: UIImage(named:"compose"), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(replytoTweet))
 
+        self.navigationItem.rightBarButtonItem = rightBarbutton
         // Do any additional setup after loading the view.
         loadViewForTweet()
         
     }
-
+    
+    func replytoTweet() -> Void {
+        self.performSegue(withIdentifier: "composeReplyTweet", sender: self)
+    }
+    
     func loadViewForTweet() -> Void {
         if self.tweet != nil {
             let user = self.tweet?.user
@@ -63,7 +70,6 @@ class TweetDetailViewController: UIViewController {
             if let imgURL = tweet?.user?.profileImageUrl {
                 self.userProfileImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
-            
         }
     }
     override func didReceiveMemoryWarning() {
@@ -72,14 +78,22 @@ class TweetDetailViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        if(segue.identifier == "composeReplyTweet") {
+            if let navController = segue.destination as? UINavigationController {
+                let vc = navController.topViewController as! TweetComposeViewController
+                vc.replyForTweet(tweet: self.tweet)
+
+            }
+        }
     }
-    */
+ 
 
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate , TweetComposeViewControllerDelegate {
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return (self.tweets?.count)!
@@ -58,6 +58,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         User.currentUser?.logout()
     }
 
+    func tweetComposeViewController(viewController: TweetComposeViewController, didPostNewTweet tweet: Tweet) {
+        self.tweets?.insert(tweet, at: 0)
+        self.tweetsTableView.reloadData()
+    }
+
     
     // MARK: - Navigation
 
@@ -73,6 +78,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 if let indesPath = self.tweetsTableView.indexPath(for: cell) {
                     vc.tweet = self.tweets?[indesPath.row]
                 }
+            }
+        }
+        else if (segue.identifier == "composeNewTweet") {
+            if let navController = segue.destination as? UINavigationController {
+                let vc = navController.topViewController as! TweetComposeViewController
+                vc.replyForTweet(tweet: nil)
+                vc.composeTweetDelegate = self
+                
             }
         }
     }
