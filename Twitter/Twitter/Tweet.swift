@@ -18,7 +18,6 @@ let favouritedKey       = "favorited"
 let retweetedKey        = "retweeted"
 let idStrKey            = "id_str"
 
-
 class Tweet: NSObject {
     var user: User?
     var text: String?

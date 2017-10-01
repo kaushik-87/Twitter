@@ -78,6 +78,56 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    func retweetAndUnretweet(urlPath: String?, params: NSDictionary?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        
+        post(urlPath!, parameters: params, progress: nil, success: { (task :URLSessionDataTask, response: Any?) in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            completion(tweet, nil)
+        }) { (task: URLSessionDataTask?, error:Error) in
+            completion(nil,error)
+        }
+    }
+    
+    
+    func favoriteUnFavourite(urlPath: String?, params: NSDictionary?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        post(urlPath!, parameters: params, progress: nil, success: { (task :URLSessionDataTask, response: Any?) in
+            let tweet = Tweet(dictionary: response as! NSDictionary)
+            completion(tweet, nil)
+        }) { (task: URLSessionDataTask?, error:Error) in
+            completion(nil,error)
+
+        }
+    }
+    
+    func reTweet(tweet: Tweet?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        if let tweetId =  tweet?.id {
+            let urlPath = "1.1/statuses/retweet/\(tweetId).json"
+            retweetAndUnretweet(urlPath: urlPath, params: nil, completion: completion)
+        }
+    }
+    
+    func unReTweet(tweet: Tweet?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        if let tweetId =  tweet?.id {
+            let urlPath = "1.1/statuses/destroy/\(tweetId).json"
+            retweetAndUnretweet(urlPath: urlPath, params: nil, completion: completion)
+        }
+    }
+    
+    func addToFavourite(tweet: Tweet?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        if let tweetId =  tweet?.id {
+            let urlPath = "1.1/favorites/create.json"
+            favoriteUnFavourite(urlPath: urlPath, params: ["id":tweetId], completion: completion)
+        }
+    }
+    
+    func removeFromFavourite(tweet: Tweet?, completion : @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        if let tweetId =  tweet?.id {
+            let urlPath = "1.1/favorites/destroy.json"
+            favoriteUnFavourite(urlPath: urlPath, params: ["id":tweetId], completion: completion)
+
+        }
+    }
+    
     
     
     func openURL(url : NSURL?){

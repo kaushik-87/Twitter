@@ -32,6 +32,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self, selector: #selector(didReplyTweet(notification:)), name: Notification.Name("didSendReplyTweetNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didRemoveFromFavorite(notification:)), name: Notification.Name("didRemoveFromFavoriteNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didAddToFavorite(notification:)), name: Notification.Name("didAddToFavoriteNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didUnReTweet(notification:)), name: Notification.Name("didUnRetweetNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didReTweet(notification:)), name: Notification.Name("didRetweetNotification"), object: nil)
 
         self.tweets = [Tweet]()
         self.tweetsTableView.rowHeight = UITableViewAutomaticDimension
@@ -70,6 +74,36 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     func tweetComposeViewController(viewController: TweetComposeViewController, didPostNewTweet tweet: Tweet) {
         insertNewTweetAndReloadView(tweet: tweet)
+    }
+    
+    
+    func didUnReTweet(notification : NSNotification) -> Void {
+        if let tweet =  notification.userInfo?[Notification.Name("Tweet")] as? Tweet {
+            self.tweets?[(self.tweetsTableView.indexPathForSelectedRow?.row)!] = tweet
+            self.tweetsTableView.reloadRows(at: [self.tweetsTableView.indexPathForSelectedRow!], with: UITableViewRowAnimation.automatic)
+           // self.tweetsTableView.deselectRow(at: self.tweetsTableView.indexPathForSelectedRow!, animated: false)
+        }
+    }
+    func didReTweet(notification : NSNotification) -> Void {
+        if let tweet =  notification.userInfo?[Notification.Name("Tweet")] as? Tweet {
+            self.tweets?[(self.tweetsTableView.indexPathForSelectedRow?.row)!] = tweet
+            self.tweetsTableView.reloadRows(at: [self.tweetsTableView.indexPathForSelectedRow!], with: UITableViewRowAnimation.automatic)
+            //self.tweetsTableView.deselectRow(at: self.tweetsTableView.indexPathForSelectedRow!, animated: false)
+        }
+    }
+    func didAddToFavorite(notification : NSNotification) -> Void {
+        if let tweet =  notification.userInfo?[Notification.Name("Tweet")] as? Tweet {
+            self.tweets?[(self.tweetsTableView.indexPathForSelectedRow?.row)!] = tweet
+            self.tweetsTableView.reloadRows(at: [self.tweetsTableView.indexPathForSelectedRow!], with: UITableViewRowAnimation.automatic)
+            //self.tweetsTableView.deselectRow(at: self.tweetsTableView.indexPathForSelectedRow!, animated: false)
+        }
+    }
+    func didRemoveFromFavorite(notification : NSNotification) -> Void {
+        if let tweet =  notification.userInfo?[Notification.Name("Tweet")] as? Tweet {
+            self.tweets?[(self.tweetsTableView.indexPathForSelectedRow?.row)!] = tweet
+            self.tweetsTableView.reloadRows(at: [self.tweetsTableView.indexPathForSelectedRow!], with: UITableViewRowAnimation.automatic)
+            //self.tweetsTableView.deselectRow(at: self.tweetsTableView.indexPathForSelectedRow!, animated: false)
+        }
     }
     
     func didReplyTweet(notification : NSNotification) -> Void {

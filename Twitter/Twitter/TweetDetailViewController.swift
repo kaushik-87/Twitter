@@ -70,6 +70,12 @@ class TweetDetailViewController: UIViewController {
             if let imgURL = tweet?.user?.profileImageUrl {
                 self.userProfileImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
+            
+            let imageName = (tweet?.favourited)! ? "Favorite" : "Favorite_black"
+            self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+            
+            let retweetImageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+            self.retweetButton.setImage(UIImage(named:retweetImageName), for: UIControlState.normal)
         }
     }
     override func didReceiveMemoryWarning() {
@@ -94,6 +100,103 @@ class TweetDetailViewController: UIViewController {
             }
         }
     }
- 
+    @IBAction func favAction(_ sender: Any) {
+        if let favourited = self.tweet?.favourited {
+            
+            if favourited == true {
+                self.tweet?.favourited =  false
+                if let count = self.tweet?.favoriteCount {
+                    self.tweet?.favoriteCount = count-1
+                }
+                TwitterClient.sharedInstance.removeFromFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
+                    if tweet != nil {
+                        DispatchQueue.main.async {
+                            let userInfo = [Notification.Name("Tweet"): self.tweet!]
+                            let didRemoveFromFavoriteNotification = Notification(name: Notification.Name("didRemoveFromFavoriteNotification"), object: self, userInfo: userInfo)
+                            NotificationCenter.default.post(didRemoveFromFavoriteNotification)
+                        }
+                    }
+                })
+            }else{
+                self.tweet?.favourited = true
+                if let count = self.tweet?.favoriteCount {
+                    self.tweet?.favoriteCount = count+1
+                }
+                TwitterClient.sharedInstance.addToFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
+                    if tweet != nil {
+                        DispatchQueue.main.async {
+                            let userInfo = [Notification.Name("Tweet"): tweet!]
+                            let didAddToFavoriteNotification = Notification(name: Notification.Name("didAddToFavoriteNotification"), object: self, userInfo: userInfo)
+                            NotificationCenter.default.post(didAddToFavoriteNotification)
+                        }
+                    }
+                })
+            }
+            
+            updateFav()
 
+        }
+    }
+    
+    @IBAction func reTweetAction(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        // add the actions (buttons)
+        let reTweetTitle = (self.tweet?.retweeted)! ? "Undo Retweet" : "Retweet"
+        let actionStyle = (reTweetTitle == "Undo Retweet") ? UIAlertActionStyle.destructive : UIAlertActionStyle.default
+        alert.addAction(UIAlertAction(title: reTweetTitle, style: actionStyle, handler: { (action: UIAlertAction) in
+            print("Retweet")
+            if let retweeted = self.tweet?.retweeted {
+                if retweeted == true {
+                    self.tweet?.retweeted = false
+                    if let count = self.tweet?.retweetedCount {
+                        self.tweet?.retweetedCount = count-1
+                    }
+                    TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                        if tweet != nil {
+                            DispatchQueue.main.async {
+                                let userInfo = [Notification.Name("Tweet"): self.tweet!]
+                                let didUnRetweetNotification = Notification(name: Notification.Name("didUnRetweetNotification"), object: self, userInfo: userInfo)
+                                NotificationCenter.default.post(didUnRetweetNotification)
+                            }
+                        }
+                    })
+                }else{
+                    self.tweet?.retweeted = true
+                    if let count = self.tweet?.retweetedCount {
+                        self.tweet?.retweetedCount = count+1
+                    }
+                    TwitterClient.sharedInstance.reTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                        if tweet != nil {
+                            DispatchQueue.main.async {
+                                let userInfo = [Notification.Name("Tweet"): tweet!]
+                                let didRetweetNotification = Notification(name: Notification.Name("didRetweetNotification"), object: self, userInfo: userInfo)
+                                NotificationCenter.default.post(didRetweetNotification)
+                            }
+                        }
+                    })
+                }
+                self.updateRetweet()
+            }
+        }))
+            
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: { (action: UIAlertAction) in
+            print("cancel")
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
+    }
+    func updateFav() -> Void {
+        let imageName = (self.tweet?.favourited)! ? "Favorite" : "Favorite_black"
+        self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+        self.likesLabel.text = "\(self.tweet?.favoriteCount ?? 0)"
+    }
+    
+    func updateRetweet() {
+        let imageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+        self.retweetButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+        self.retweetCountLabel.text = "\(self.tweet?.retweetedCount ?? 0)"
+    }
 }

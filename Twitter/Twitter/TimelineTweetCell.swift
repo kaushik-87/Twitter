@@ -43,6 +43,20 @@ class TimelineTweetCell: UITableViewCell {
             let dateInStr = date?.timeAgo()
             self.tweetTimeLabel.text = dateInStr
             
+            let imageName = (tweet?.favourited)! ? "Favorite" : "Favorite_black"
+            self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+            
+            let retweetImageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+            self.retweetButton.setImage(UIImage(named:retweetImageName), for: UIControlState.normal)
+            if (tweet?.retweetedCount)!>0 {
+                self.retweetButton.setTitle("\(tweet?.retweetedCount ?? 0)", for: .normal)
+ 
+            }
+            if (tweet?.favoriteCount)!>0 {
+                self.favouriteButton.setTitle("\(tweet?.favoriteCount ?? 0)", for: .normal)
+            }
+            
+            
         }
     }
     
