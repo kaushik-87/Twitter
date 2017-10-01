@@ -16,6 +16,8 @@ let totalCharactersCount = 140
 
 @objc protocol TweetComposeViewControllerDelegate {
     @objc optional func tweetComposeViewController(viewController: TweetComposeViewController, didPostNewTweet: Tweet)
+    @objc optional func tweetComposeViewController(viewController: TweetComposeViewController, didPostReplyTweet: Tweet)
+
 }
 
 class TweetComposeViewController: UIViewController, UITextViewDelegate {
@@ -48,19 +50,38 @@ class TweetComposeViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func postTweet(_ sender: Any) {
-        TwitterClient.sharedInstance.postNewTweet(tweetText: self.composeTextView.text, params: nil) { (tweet: Tweet?, error: Error?) in
-            if tweet != nil {
-                if self.composeTweetDelegate != nil {
-                    self.composeTweetDelegate?.tweetComposeViewController!(viewController: self, didPostNewTweet: tweet!)
-                }
-                DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: {
-                        
-                    })
+        switch self.currentTweetMode {
+        case .tweetModeCompose:
+            TwitterClient.sharedInstance.postNewTweet(newTweetText: self.composeTextView.text) { (tweet: Tweet?, error: Error?) in
+                if tweet != nil {
+                    if self.composeTweetDelegate != nil {
+                        self.composeTweetDelegate?.tweetComposeViewController!(viewController: self, didPostNewTweet: tweet!)
+                    }
+                    DispatchQueue.main.async {
+                        self.dismiss(animated: true, completion: {
+                        })
+                    }
                 }
             }
-
+            break
+        case .tweetModeReply:
+            TwitterClient.sharedInstance.postReply(tweetText: self.composeTextView.text, toTweet: self.currentTweet!, completion: { (tweet: Tweet?, error: Error?) in
+                if tweet != nil {
+                    DispatchQueue.main.async {
+                        let userInfo = [Notification.Name("Tweet"): tweet!]
+                        let didSendReplyNotification = Notification(name: Notification.Name("didSendReplyTweetNotification"), object: self, userInfo: userInfo)
+                        NotificationCenter.default.post(didSendReplyNotification)
+                        self.dismiss(animated: true, completion: {
+                        })
+                    }
+                }                
+            })
+            break
+        default:
+            break
+            
         }
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -104,6 +125,7 @@ class TweetComposeViewController: UIViewController, UITextViewDelegate {
         case .tweetModeReply:
             self.replyDetailsStackViewHeightConstraint.constant = 15.5
             self.composePlaceholderLabel.text = "Tweet your reply"
+            self.replyToTweetHandlerLabel.text = "@"+(self.currentTweet?.user?.screenName)!
             break
         default:
             break

@@ -56,15 +56,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func postNewTweet(tweetText: String, params: NSDictionary?, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
-        guard let urlencodedText = tweetText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else{
-            completion(nil, nil)
-            return
-        }
+    func postNewTweet(newTweetText : String, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
+        postTweet(params: ["status":newTweetText], completion: completion)
+
+    }
+    
+    func postReply(tweetText: String, toTweet: Tweet, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
         
-        let urlString = "/1.1/statuses/update.json?status=\(urlencodedText)"
-        post(urlString, parameters: nil, progress: nil, success: { (task :URLSessionDataTask, response :Any?) in
-            print("Success")
+        postTweet(params: ["status":tweetText,"in_reply_to_status_id":toTweet.id!], completion: completion)
+    }
+    
+    func postTweet(params: NSDictionary?, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
+        let urlString = "/1.1/statuses/update.json"
+        post(urlString, parameters: params, progress: nil, success: { (task :URLSessionDataTask, response :Any?) in
+            print("Success Response =\(response)")
             let tweet = Tweet(dictionary: response as! NSDictionary)
             completion(tweet, nil)
         }) { (task : URLSessionDataTask?, error: Error?) in
@@ -72,6 +77,8 @@ class TwitterClient: BDBOAuth1SessionManager {
             completion(nil,error)
         }
     }
+    
+    
     
     func openURL(url : NSURL?){
         fetchAccessToken(withPath: "oauth/access_token", method: "POST", requestToken:

@@ -31,7 +31,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     var tweets : [Tweet]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(didReplyTweet(notification:)), name: Notification.Name("didSendReplyTweetNotification"), object: nil)
+
         self.tweets = [Tweet]()
         self.tweetsTableView.rowHeight = UITableViewAutomaticDimension
         self.tweetsTableView.estimatedRowHeight = 140
@@ -42,11 +43,20 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 print("\(tweet.text)")
             }
         }
-        
-        
-
         // Do any additional setup after loading the view.
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -59,7 +69,15 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     func tweetComposeViewController(viewController: TweetComposeViewController, didPostNewTweet tweet: Tweet) {
-        self.tweets?.insert(tweet, at: 0)
+        insertNewTweetAndReloadView(tweet: tweet)
+    }
+    
+    func didReplyTweet(notification : NSNotification) -> Void {
+        insertNewTweetAndReloadView(tweet: notification.userInfo?[Notification.Name("Tweet")] as? Tweet)
+    }
+    
+    func insertNewTweetAndReloadView(tweet: Tweet?) -> Void {
+        self.tweets?.insert(tweet!, at: 0)
         self.tweetsTableView.reloadData()
     }
 
