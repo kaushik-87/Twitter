@@ -220,7 +220,7 @@
                                 <action selector="logout:" destination="cwJ-XN-ygL" id="Obf-B0-ys2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="compose" id="rl1-pm-rcS">
+                        <barButtonItem key="rightBarButtonItem" image="Compose" id="rl1-pm-rcS">
                             <connections>
                                 <segue destination="oWE-rI-vf7" kind="presentation" identifier="composeNewTweet" id="SfO-vd-uSJ"/>
                             </connections>
@@ -641,10 +641,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Compose" width="30" height="30"/>
         <image name="Favorite_black" width="20" height="20"/>
         <image name="Reply" width="20" height="20"/>
         <image name="Retweet_black" width="30" height="30"/>
-        <image name="compose" width="35" height="29"/>
         <image name="downarrow" width="15" height="15"/>
         <image name="retweet" width="15" height="15"/>
         <image name="verified" width="20" height="20"/>

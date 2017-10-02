@@ -13,6 +13,8 @@ import BDBOAuth1Manager
 let twitterConsumerKey = "FGbzbagCvl7yCvSmZeHxR6SpY"
 let twitterConsumerSecret = "9dib7dqmdHcMkOroNQ2I1xsMOr1hqhHd6V9wpkrWzRNsP4O9CA"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
+let count = 50
+
 
 class TwitterClient: BDBOAuth1SessionManager {
     
@@ -44,6 +46,19 @@ class TwitterClient: BDBOAuth1SessionManager {
         }
     }
     
+    func fetchTwitterDetails(tweetId: String, completion: @escaping (_ tweet: Tweet?, _ error : Error?)->()) -> Void {
+        let params = ["id":tweetId]
+        get("1.1/statuses/show.json", parameters: params
+            , progress: nil, success: { (task: URLSessionDataTask, response :Any?) in
+                print("Timeline \(String(describing: response))")
+                let tweet = Tweet(dictionary: response as! NSDictionary)
+                completion(tweet, nil)
+        }, failure: { (task:URLSessionDataTask?, error:Error) in
+            print("error")
+            completion(nil,error)
+        })
+    }
+    
     func homeTimelineWithParams(params:NSDictionary?, completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void {
         get("1.1/statuses/home_timeline.json", parameters: params
             , progress: nil, success: { (task: URLSessionDataTask, response :Any?) in
@@ -54,6 +69,13 @@ class TwitterClient: BDBOAuth1SessionManager {
             print("error")
             completion(nil,error)
         })
+    }
+    
+    
+    
+    func homeTimeLineFetchNextTweets(fromTweet : Tweet, completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void {
+        let params = ["count":count,"max_id":fromTweet.id!] as NSDictionary
+        homeTimelineWithParams(params: params, completion: completion)
     }
     
     func postNewTweet(newTweetText : String, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {

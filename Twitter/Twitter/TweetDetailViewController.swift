@@ -39,7 +39,7 @@ class TweetDetailViewController: UIViewController {
 
         self.userProfileImageView.layer.cornerRadius = 0.5 * self.userProfileImageView.frame.width
         
-        let rightBarbutton = UIBarButtonItem(image: UIImage(named:"compose"), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(replytoTweet))
+        let rightBarbutton = UIBarButtonItem(image: UIImage(named:"Compose"), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(replytoTweet))
 
         self.navigationItem.rightBarButtonItem = rightBarbutton
         // Do any additional setup after loading the view.
@@ -110,11 +110,17 @@ class TweetDetailViewController: UIViewController {
                 }
                 TwitterClient.sharedInstance.removeFromFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
-                        DispatchQueue.main.async {
-                            let userInfo = [Notification.Name("Tweet"): self.tweet!]
-                            let didRemoveFromFavoriteNotification = Notification(name: Notification.Name("didRemoveFromFavoriteNotification"), object: self, userInfo: userInfo)
-                            NotificationCenter.default.post(didRemoveFromFavoriteNotification)
-                        }
+                        
+                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                            if tweet != nil {
+                                DispatchQueue.main.async {
+                                    let userInfo = [Notification.Name("Tweet"): tweet!]
+                                    let didRemoveFromFavoriteNotification = Notification(name: Notification.Name("didRemoveFromFavoriteNotification"), object: self, userInfo: userInfo)
+                                    NotificationCenter.default.post(didRemoveFromFavoriteNotification)
+                                }
+                            }
+                        })
+
                     }
                 })
             }else{
@@ -124,11 +130,16 @@ class TweetDetailViewController: UIViewController {
                 }
                 TwitterClient.sharedInstance.addToFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
-                        DispatchQueue.main.async {
-                            let userInfo = [Notification.Name("Tweet"): tweet!]
-                            let didAddToFavoriteNotification = Notification(name: Notification.Name("didAddToFavoriteNotification"), object: self, userInfo: userInfo)
-                            NotificationCenter.default.post(didAddToFavoriteNotification)
-                        }
+                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                            if tweet != nil {
+                                DispatchQueue.main.async {
+                                    let userInfo = [Notification.Name("Tweet"): tweet!]
+                                    let didAddToFavoriteNotification = Notification(name: Notification.Name("didAddToFavoriteNotification"), object: self, userInfo: userInfo)
+                                    NotificationCenter.default.post(didAddToFavoriteNotification)
+                                }
+                            }
+                        })
+
                     }
                 })
             }
@@ -155,11 +166,17 @@ class TweetDetailViewController: UIViewController {
                     }
                     TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
                         if tweet != nil {
-                            DispatchQueue.main.async {
-                                let userInfo = [Notification.Name("Tweet"): self.tweet!]
-                                let didUnRetweetNotification = Notification(name: Notification.Name("didUnRetweetNotification"), object: self, userInfo: userInfo)
-                                NotificationCenter.default.post(didUnRetweetNotification)
-                            }
+                            
+                            TwitterClient.sharedInstance.fetchTwitterDetails(tweetId: (tweet?.id)!, completion: { (tweet : Tweet?, error:Error?) in
+                                if tweet != nil {
+                                    DispatchQueue.main.async {
+                                        let userInfo = [Notification.Name("Tweet"): tweet!]
+                                        let didUnRetweetNotification = Notification(name: Notification.Name("didUnRetweetNotification"), object: self, userInfo: userInfo)
+                                        NotificationCenter.default.post(didUnRetweetNotification)
+                                    }
+                                }
+                            })
+
                         }
                     })
                 }else{
@@ -169,11 +186,17 @@ class TweetDetailViewController: UIViewController {
                     }
                     TwitterClient.sharedInstance.reTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
                         if tweet != nil {
-                            DispatchQueue.main.async {
-                                let userInfo = [Notification.Name("Tweet"): tweet!]
-                                let didRetweetNotification = Notification(name: Notification.Name("didRetweetNotification"), object: self, userInfo: userInfo)
-                                NotificationCenter.default.post(didRetweetNotification)
-                            }
+                            
+                            TwitterClient.sharedInstance.fetchTwitterDetails(tweetId: (tweet?.id)!, completion: { (tweet : Tweet?, error:Error?) in
+                                if tweet != nil {
+                                    DispatchQueue.main.async {
+                                        let userInfo = [Notification.Name("Tweet"): tweet!]
+                                        let didRetweetNotification = Notification(name: Notification.Name("didRetweetNotification"), object: self, userInfo: userInfo)
+                                        NotificationCenter.default.post(didRetweetNotification)
+                                    }
+                                }
+                            })
+
                         }
                     })
                 }
