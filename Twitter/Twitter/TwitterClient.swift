@@ -10,8 +10,10 @@ import UIKit
 import BDBOAuth1Manager
 
 
-let twitterConsumerKey = "FGbzbagCvl7yCvSmZeHxR6SpY"
-let twitterConsumerSecret = "9dib7dqmdHcMkOroNQ2I1xsMOr1hqhHd6V9wpkrWzRNsP4O9CA"
+let twitterConsumerKey = "VryCdIDG9zyLVxghGMwWtc39b"
+//"FGbzbagCvl7yCvSmZeHxR6SpY"
+let twitterConsumerSecret = "NXuCSAkXM1wbDIexybY2rGGxBrOSVomSs7owZaTc3zAqCwlP1k"
+//"9dib7dqmdHcMkOroNQ2I1xsMOr1hqhHd6V9wpkrWzRNsP4O9CA"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
 let count = 50
 
