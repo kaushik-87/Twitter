@@ -112,6 +112,7 @@ class TimelineTweetCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.mediaImageView.layer.cornerRadius = 5
         self.userIconImageView.layer.cornerRadius = 0.5 * self.userIconImageView.frame.width
         replyButton.addTarget(self, action: #selector(replyButtonTapped), for: UIControlEvents.touchUpInside)
         retweetButton.addTarget(self, action: #selector(reTweetButtonTapped), for: UIControlEvents.touchUpInside)
