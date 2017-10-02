@@ -178,10 +178,13 @@ class TweetDetailViewController: UIViewController {
         let alert = UIAlertController(title: "", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         // add the actions (buttons)
+        
+        
         let reTweetTitle = (self.tweetToDisplay?.retweeted)! ? "Undo Retweet" : "Retweet"
         let actionStyle = (reTweetTitle == "Undo Retweet") ? UIAlertActionStyle.destructive : UIAlertActionStyle.default
         alert.addAction(UIAlertAction(title: reTweetTitle, style: actionStyle, handler: { (action: UIAlertAction) in
             print("Retweet")
+            
             if let retweeted = self.tweetToDisplay?.retweeted {
                 if retweeted == true {
                     self.tweetToDisplay?.retweeted = false
@@ -236,18 +239,40 @@ class TweetDetailViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     func updateFav() -> Void {
-        let imageName = (self.tweetToDisplay?.favourited)! ? "Favorite" : "Favorite_black"
-        self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+        
+        UIView.animate(withDuration: 0.6, animations: {
+            self.favouriteButton.transform = CGAffineTransform.identity.scaledBy(x: 0.6, y: 0.6)
+        }, completion: { (finish) in
+            UIView.animate(withDuration: 0.6, animations: {
+                self.favouriteButton.transform = CGAffineTransform.identity
+                let imageName = (self.tweetToDisplay?.favourited)! ? "Favorite" : "Favorite_black"
+                self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+                
+            })
+        })
+
+
         let favCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.favoriteCount)!)
 
         self.likesLabel.text = "\(favCountInstring)"
     }
     
     func updateRetweet() {
-        let imageName = (self.tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
-        self.retweetButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+        
+        UIView.animate(withDuration: 0.6, animations: {
+            self.retweetButton.transform = CGAffineTransform.identity.scaledBy(x: 0.6, y: 0.6)
+        }, completion: { (finish) in
+            UIView.animate(withDuration: 0.6, animations: {
+                self.retweetButton.transform = CGAffineTransform.identity
+                let imageName = (self.tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
+                self.retweetButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
+
+            })
+        })
+        
         let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.retweetedCount)!)
         self.retweetCountLabel.text = "\(retweetCountInstring)"
+
     }
 
 }
