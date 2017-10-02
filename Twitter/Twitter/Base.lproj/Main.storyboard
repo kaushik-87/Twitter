@@ -10,6 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Helvetica.ttc">
+            <string>Helvetica</string>
+            <string>Helvetica-Bold</string>
+        </array>
         <array key="HelveticaNeue.ttc">
             <string>HelveticaNeue</string>
             <string>HelveticaNeue-Bold</string>
@@ -28,16 +32,47 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sM5-m2-WLt">
-                                <rect key="frame" x="119" y="281" width="118" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Login wit tweeter"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="DkU-OW-812">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2017 @ Kaushik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfE-2s-bZG">
+                                <rect key="frame" x="103.5" y="630" width="167" height="17"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="17" id="WOa-mx-crP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                <color key="textColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sM5-m2-WLt">
+                                <rect key="frame" x="55" y="533" width="264" height="38"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="38" id="2uy-1l-Ysa"/>
+                                    <constraint firstAttribute="width" constant="264" id="jKp-HT-GB1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                                <size key="titleShadowOffset" width="1" height="0.0"/>
+                                <state key="normal" title="Login to my Account">
+                                    <color key="titleColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="onLogin:" destination="BYZ-38-t0r" eventType="touchUpInside" id="P7s-gU-72N"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="DkU-OW-812" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="1zT-eh-18q"/>
+                            <constraint firstItem="nfE-2s-bZG" firstAttribute="top" secondItem="sM5-m2-WLt" secondAttribute="bottom" constant="59" id="HdT-CN-CsA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="nfE-2s-bZG" secondAttribute="bottom" constant="20" id="Tvh-xc-FqF"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="DkU-OW-812" secondAttribute="bottom" id="UET-Ye-Rj3"/>
+                            <constraint firstItem="nfE-2s-bZG" firstAttribute="centerX" secondItem="DkU-OW-812" secondAttribute="centerX" id="amN-bE-sJe"/>
+                            <constraint firstAttribute="trailing" secondItem="DkU-OW-812" secondAttribute="trailing" id="dDt-lj-vqd"/>
+                            <constraint firstItem="DkU-OW-812" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="gwe-qK-y7z"/>
+                            <constraint firstItem="sM5-m2-WLt" firstAttribute="centerX" secondItem="DkU-OW-812" secondAttribute="centerX" id="lcW-oe-mhJ"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="bwC-SF-2Aa" kind="presentation" identifier="loginSegue" id="6li-GJ-q3V"/>
@@ -45,7 +80,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-273" y="-423"/>
+            <point key="canvasLocation" x="-274.39999999999998" y="-423.23838080959524"/>
         </scene>
         <!--Home-->
         <scene sceneID="r1a-SE-3uS">
@@ -59,15 +94,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="146" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ghn-Nw-kDb">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="246" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ghn-Nw-kDb">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="147" id="2lf-aj-2TW" customClass="TimelineTweetCell" customModule="Twitter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="147"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="gray" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="246" id="2lf-aj-2TW" customClass="TimelineTweetCell" customModule="Twitter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="246"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2lf-aj-2TW" id="GxI-rG-dQg">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="146.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="245.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZsK-Um-fU8">
@@ -119,14 +154,14 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Vrg-T8-qtX">
-                                                    <rect key="frame" x="78" y="55" width="289" height="37.5"/>
+                                                    <rect key="frame" x="78" y="55" width="289" height="136.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     <dataDetectorType key="dataDetectorTypes" phoneNumber="YES" link="YES" address="YES"/>
                                                 </textView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wnh-uA-OUL">
-                                                    <rect key="frame" x="78" y="100.5" width="281" height="30"/>
+                                                    <rect key="frame" x="78" y="199.5" width="281" height="30"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wk-yg-BcU">
                                                             <rect key="frame" x="0.0" y="5" width="93.5" height="20"/>
@@ -216,6 +251,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="i13-yM-wg2">
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" id="sSJ-R7-bpx">
+                            <color key="tintColor" red="0.4549019608" green="0.69019607839999997" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="logout:" destination="cwJ-XN-ygL" id="Obf-B0-ys2"/>
                             </connections>
@@ -232,7 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NuX-Bl-Zb6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1377" y="-423"/>
+            <point key="canvasLocation" x="1376.8" y="-423.23838080959524"/>
         </scene>
         <!--Tweet-->
         <scene sceneID="Q1H-aV-jyq">
@@ -504,7 +540,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="@OatMeal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18f-2W-gHU">
                                         <rect key="frame" x="91" y="0.0" width="268" height="15.5"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                        <color key="textColor" red="0.48349211370667738" green="0.73136107442304532" blue="0.85389852190985893" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.45490196078431372" green="0.69019607843137254" blue="0.81568627450980391" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -526,13 +562,15 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vrY-HT-ucf">
                                         <rect key="frame" x="289" y="11" width="70" height="30"/>
-                                        <color key="backgroundColor" red="0.5408235576474717" green="0.83047265333352438" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.51764705882352935" green="0.80000000000000004" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="70" id="B6U-7z-y9T"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
+                                        <size key="titleShadowOffset" width="1" height="0.0"/>
                                         <state key="normal" title="Tweet">
-                                            <color key="titleColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled">
                                             <color key="titleColor" red="0.8916661202657209" green="0.90388331335107874" blue="0.92243020304568524" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -582,7 +620,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9RU-pt-Rl2">
-                        <barButtonItem key="rightBarButtonItem" title="Cancel" id="F48-XQ-kvY">
+                        <barButtonItem key="rightBarButtonItem" image="cross" id="F48-XQ-kvY">
+                            <color key="tintColor" red="0.51764705879999995" green="0.80000000000000004" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="cancelComposing:" destination="O40-OP-kWz" id="gLC-EN-f6P"/>
                             </connections>
@@ -645,11 +684,13 @@
         <image name="Favorite_black" width="20" height="20"/>
         <image name="Reply" width="20" height="20"/>
         <image name="Retweet_black" width="30" height="30"/>
+        <image name="cross" width="25" height="25"/>
         <image name="downarrow" width="15" height="15"/>
+        <image name="launchScreen" width="750" height="1333"/>
         <image name="retweet" width="15" height="15"/>
         <image name="verified" width="20" height="20"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Lvz-ar-0jr"/>
+        <segue reference="SfO-vd-uSJ"/>
     </inferredMetricsTieBreakers>
 </document>

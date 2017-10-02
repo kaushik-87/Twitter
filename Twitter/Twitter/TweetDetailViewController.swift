@@ -31,8 +31,16 @@ class TweetDetailViewController: UIViewController {
     
     @IBOutlet weak var retweetLabelYConstraint: NSLayoutConstraint!
     @IBOutlet weak var retweetIconTopConstraint: NSLayoutConstraint!
-    
-    var tweet : Tweet?
+    var tweetToDisplay :Tweet? 
+    var tweet : Tweet?{
+        didSet {
+            if tweet?.retweetedTweet != nil {
+                self.tweetToDisplay = tweet?.retweetedTweet!
+            }else{
+                self.tweetToDisplay = tweet
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,16 +62,16 @@ class TweetDetailViewController: UIViewController {
     
     func loadViewForTweet() -> Void {
         if self.tweet != nil {
-            let user = self.tweet?.user
+            let user = self.tweetToDisplay?.user
             self.userNameLabel.text = user?.name
             self.userScreenameLabel.text = "@" + (user?.screenName)!
             let veriiedAccount = user?.verifiedAccount
             self.verifiedAccountImageView.isHidden = veriiedAccount! ? false : true
-            self.tweetTextView.text = self.tweet?.text
-            if self.tweet?.media != nil {
+            self.tweetTextView.text = self.tweetToDisplay?.text
+            if self.tweetToDisplay?.media != nil {
                 self.mediaImageHeightConstraint.constant = 220
                     //(self.tweet?.media?.mediumSize?.height)!
-                self.mediaImageView.setImageWith(URL(string:(self.tweet?.media?.mediaURL)!)!)
+                self.mediaImageView.setImageWith(URL(string:(self.tweetToDisplay?.media?.mediaURL)!)!)
                 self.retweetIconImageHeightConstraint.constant = 0
                 self.retweetLabelHeightConstraint.constant = 0
                 self.retweetLabelYConstraint.constant = 0
@@ -76,21 +84,21 @@ class TweetDetailViewController: UIViewController {
                 self.retweetIconTopConstraint.constant = 0
             }
 
-            self.tweetDateTimeLabel.text = TweeterUtility.dateToString(createdDate: (self.tweet?.createdAt)!)
-            let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweet?.retweetedCount)!)
+            self.tweetDateTimeLabel.text = TweeterUtility.dateToString(createdDate: (self.tweetToDisplay?.createdAt)!)
+            let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.retweetedCount)!)
 
             self.retweetCountLabel.text = "\(retweetCountInstring)"
-            let favCountInstring = TweeterUtility.numberToString(from: (self.tweet?.favoriteCount)!)
+            let favCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.favoriteCount)!)
 
             self.likesLabel.text = "\(favCountInstring)"
-            if let imgURL = tweet?.user?.profileImageUrl {
+            if let imgURL = tweetToDisplay?.user?.profileImageUrl {
                 self.userProfileImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
             
-            let imageName = (tweet?.favourited)! ? "Favorite" : "Favorite_black"
+            let imageName = (tweetToDisplay?.favourited)! ? "Favorite" : "Favorite_black"
             self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
             
-            let retweetImageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+            let retweetImageName = (self.tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
             self.retweetButton.setImage(UIImage(named:retweetImageName), for: UIControlState.normal)
         }
     }
@@ -111,23 +119,23 @@ class TweetDetailViewController: UIViewController {
         if(segue.identifier == "composeReplyTweet") {
             if let navController = segue.destination as? UINavigationController {
                 let vc = navController.topViewController as! TweetComposeViewController
-                vc.replyForTweet(tweet: self.tweet)
+                vc.replyForTweet(tweet: self.tweetToDisplay)
 
             }
         }
     }
     @IBAction func favAction(_ sender: Any) {
-        if let favourited = self.tweet?.favourited {
+        if let favourited = self.tweetToDisplay?.favourited {
             
             if favourited == true {
-                self.tweet?.favourited =  false
-                if let count = self.tweet?.favoriteCount {
-                    self.tweet?.favoriteCount = count-1
+                self.tweetToDisplay?.favourited =  false
+                if let count = self.tweetToDisplay?.favoriteCount {
+                    self.tweetToDisplay?.favoriteCount = count-1
                 }
-                TwitterClient.sharedInstance.removeFromFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
+                TwitterClient.sharedInstance.removeFromFavourite(tweet: self.tweetToDisplay, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
                         
-                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweetToDisplay, completion: { (tweet : Tweet?,error: Error?) in
                             if tweet != nil {
                                 DispatchQueue.main.async {
                                     let userInfo = [Notification.Name("Tweet"): tweet!]
@@ -140,13 +148,13 @@ class TweetDetailViewController: UIViewController {
                     }
                 })
             }else{
-                self.tweet?.favourited = true
-                if let count = self.tweet?.favoriteCount {
-                    self.tweet?.favoriteCount = count+1
+                self.tweetToDisplay?.favourited = true
+                if let count = self.tweetToDisplay?.favoriteCount {
+                    self.tweetToDisplay?.favoriteCount = count+1
                 }
-                TwitterClient.sharedInstance.addToFavourite(tweet: self.tweet, completion: { (tweet:Tweet?, error:Error?) in
+                TwitterClient.sharedInstance.addToFavourite(tweet: self.tweetToDisplay, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
-                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweetToDisplay, completion: { (tweet : Tweet?,error: Error?) in
                             if tweet != nil {
                                 DispatchQueue.main.async {
                                     let userInfo = [Notification.Name("Tweet"): tweet!]
@@ -170,17 +178,17 @@ class TweetDetailViewController: UIViewController {
         let alert = UIAlertController(title: "", message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
         // add the actions (buttons)
-        let reTweetTitle = (self.tweet?.retweeted)! ? "Undo Retweet" : "Retweet"
+        let reTweetTitle = (self.tweetToDisplay?.retweeted)! ? "Undo Retweet" : "Retweet"
         let actionStyle = (reTweetTitle == "Undo Retweet") ? UIAlertActionStyle.destructive : UIAlertActionStyle.default
         alert.addAction(UIAlertAction(title: reTweetTitle, style: actionStyle, handler: { (action: UIAlertAction) in
             print("Retweet")
-            if let retweeted = self.tweet?.retweeted {
+            if let retweeted = self.tweetToDisplay?.retweeted {
                 if retweeted == true {
-                    self.tweet?.retweeted = false
-                    if let count = self.tweet?.retweetedCount {
-                        self.tweet?.retweetedCount = count-1
+                    self.tweetToDisplay?.retweeted = false
+                    if let count = self.tweetToDisplay?.retweetedCount {
+                        self.tweetToDisplay?.retweetedCount = count-1
                     }
-                    TwitterClient.sharedInstance.unReTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
+                    TwitterClient.sharedInstance.unReTweet(tweet: self.tweetToDisplay, completion: { (tweet : Tweet?,error: Error?) in
                         if tweet != nil {
                             
                             TwitterClient.sharedInstance.fetchTwitterDetails(tweetId: (tweet?.id)!, completion: { (tweet : Tweet?, error:Error?) in
@@ -196,9 +204,9 @@ class TweetDetailViewController: UIViewController {
                         }
                     })
                 }else{
-                    self.tweet?.retweeted = true
-                    if let count = self.tweet?.retweetedCount {
-                        self.tweet?.retweetedCount = count+1
+                    self.tweetToDisplay?.retweeted = true
+                    if let count = self.tweetToDisplay?.retweetedCount {
+                        self.tweetToDisplay?.retweetedCount = count+1
                     }
                     TwitterClient.sharedInstance.reTweet(tweet: self.tweet, completion: { (tweet : Tweet?,error: Error?) in
                         if tweet != nil {
@@ -228,17 +236,17 @@ class TweetDetailViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     func updateFav() -> Void {
-        let imageName = (self.tweet?.favourited)! ? "Favorite" : "Favorite_black"
+        let imageName = (self.tweetToDisplay?.favourited)! ? "Favorite" : "Favorite_black"
         self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
-        let favCountInstring = TweeterUtility.numberToString(from: (self.tweet?.favoriteCount)!)
+        let favCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.favoriteCount)!)
 
         self.likesLabel.text = "\(favCountInstring)"
     }
     
     func updateRetweet() {
-        let imageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+        let imageName = (self.tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
         self.retweetButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
-        let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweet?.retweetedCount)!)
+        let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweetToDisplay?.retweetedCount)!)
         self.retweetCountLabel.text = "\(retweetCountInstring)"
     }
 

@@ -43,14 +43,16 @@ class TimelineTweetCell: UITableViewCell {
                 tweetToDisplay = tweet?.retweetedTweet
                 self.retweetLabelHeightConstraint.constant = 15
                 self.retweetImgConstraint.constant = 15
-                if let retweetedBy = tweetToDisplay?.user?.name {
+                if let retweetedBy = tweet?.user?.name {
                     self.retweetedLabel.text = "\(retweetedBy) retweeted"
+                    self.retweetImageView.isHidden = false
                     
                 }
             }else {
-                self.retweetedLabel.text = ""
                 self.retweetLabelHeightConstraint.constant = 0
                 self.retweetImgConstraint.constant = 0
+                self.retweetedLabel.text = ""
+                self.retweetImageView.isHidden = true
             }
 
 
