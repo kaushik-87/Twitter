@@ -135,7 +135,7 @@ class TweetDetailViewController: UIViewController {
                 TwitterClient.sharedInstance.removeFromFavourite(tweet: self.tweetToDisplay, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
                         
-                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweetToDisplay, completion: { (tweet : Tweet?,error: Error?) in
+                        TwitterClient.sharedInstance.fetchTwitterDetails(tweetId: (tweet?.id)!, completion: { (tweet : Tweet?, error:Error?) in
                             if tweet != nil {
                                 DispatchQueue.main.async {
                                     let userInfo = [Notification.Name("Tweet"): tweet!]
@@ -154,7 +154,7 @@ class TweetDetailViewController: UIViewController {
                 }
                 TwitterClient.sharedInstance.addToFavourite(tweet: self.tweetToDisplay, completion: { (tweet:Tweet?, error:Error?) in
                     if tweet != nil {
-                        TwitterClient.sharedInstance.unReTweet(tweet: self.tweetToDisplay, completion: { (tweet : Tweet?,error: Error?) in
+                        TwitterClient.sharedInstance.fetchTwitterDetails(tweetId: (tweet?.id)!, completion: { (tweet : Tweet?, error:Error?) in
                             if tweet != nil {
                                 DispatchQueue.main.async {
                                     let userInfo = [Notification.Name("Tweet"): tweet!]
