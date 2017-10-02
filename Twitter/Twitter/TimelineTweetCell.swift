@@ -31,8 +31,10 @@ class TimelineTweetCell: UITableViewCell {
     @IBOutlet weak var retweetImageView: UIImageView!
     @IBOutlet weak var retweetedLabel: UILabel!
     
+    @IBOutlet weak var mediaImageView: UIImageView!
     @IBOutlet weak var retweetLabelHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var retweetImgConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mediaImageHeightConstraint: NSLayoutConstraint!
     
     weak var tweetCellDelegate : TweetCellDelegate?
     var tweet: Tweet? {
@@ -90,6 +92,17 @@ class TimelineTweetCell: UITableViewCell {
             }else{
                 self.favouriteButton.setTitle("", for: .normal)
  
+            }
+            
+            
+            if (tweetToDisplay?.media != nil) {
+                self.mediaImageHeightConstraint.constant = 145
+                //(self.tweet?.media?.mediumSize?.height)!
+                self.mediaImageView.setImageWith(URL(string:(tweetToDisplay?.media?.mediaURL)!)!)
+                
+            }else{
+                self.mediaImageHeightConstraint.constant = 0
+
             }
             
             
