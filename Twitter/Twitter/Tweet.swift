@@ -28,6 +28,8 @@ class Tweet: NSObject {
     var favourited : Bool?
     var retweeted : Bool?
     var id : String?
+    var retweetedTweet : Tweet?
+    var media : Media?
     
     init(dictionary: NSDictionary) {
         let json                = JSON(dictionary)
@@ -42,6 +44,15 @@ class Tweet: NSObject {
         favourited              = json[favouritedKey].boolValue
         retweeted               = json[retweetedKey].boolValue
         id                      = json[idStrKey].stringValue
+        if json["retweeted_status"].dictionary != nil {
+            retweetedTweet          = Tweet(dictionary: json["retweeted_status"].dictionary! as NSDictionary)
+        }
+        if let extendedEntity = json["extended_entities"].dictionary {
+            if let mediaArray = extendedEntity["media"]?.array {
+               let mediaDict = mediaArray[0].dictionary as NSDictionary?
+                media = Media(dictionary: mediaDict!)
+            }
+        }
     }
     
     class func tweetsWithArray(array: [NSDictionary]) ->[Tweet] {

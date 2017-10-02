@@ -38,35 +38,49 @@ class TimelineTweetCell: UITableViewCell {
     var tweet: Tweet? {
         didSet {
             
-            self.retweetLabelHeightConstraint.constant = 0
-            self.retweetImgConstraint.constant = 0
+            var tweetToDisplay = tweet
+            if tweet?.retweetedTweet != nil {
+                tweetToDisplay = tweet?.retweetedTweet
+                self.retweetLabelHeightConstraint.constant = 15
+                self.retweetImgConstraint.constant = 15
+                if let retweetedBy = tweetToDisplay?.user?.name {
+                    self.retweetedLabel.text = "\(retweetedBy) retweeted"
+                    
+                }
+            }else {
+                self.retweetedLabel.text = ""
+                self.retweetLabelHeightConstraint.constant = 0
+                self.retweetImgConstraint.constant = 0
+            }
+
+
             
             
-            self.userNameLabel.text = tweet?.user?.name
-            if let imgURL = tweet?.user?.profileImageUrl {
+            self.userNameLabel.text = tweetToDisplay?.user?.name
+            if let imgURL = tweetToDisplay?.user?.profileImageUrl {
                 self.userIconImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
-            self.tweetTextView.text = tweet?.text
-            self.userTweetHandlerLabel.text = "@"+(tweet?.user?.screenName)!
+            self.tweetTextView.text = tweetToDisplay?.text
+            self.userTweetHandlerLabel.text = "@"+(tweetToDisplay?.user?.screenName)!
             
-            let date = tweet?.createdAt
+            let date = tweetToDisplay?.createdAt
             let dateInStr = date?.timeAgo()
             self.tweetTimeLabel.text = dateInStr
             
-            let imageName = (tweet?.favourited)! ? "Favorite" : "Favorite_black"
+            let imageName = (tweetToDisplay?.favourited)! ? "Favorite" : "Favorite_black"
             self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
             
-            let retweetImageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
+            let retweetImageName = (tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
             self.retweetButton.setImage(UIImage(named:retweetImageName), for: UIControlState.normal)
-            if (tweet?.retweetedCount)!>0 {
-                self.retweetButton.setTitle(" \(tweet?.retweetedCount ?? 0)", for: .normal)
+            if (tweetToDisplay?.retweetedCount)!>0 {
+                self.retweetButton.setTitle(" \(tweetToDisplay?.retweetedCount ?? 0)", for: .normal)
  
             }else {
                 self.retweetButton.setTitle("", for: .normal)
  
             }
-            if (tweet?.favoriteCount)!>0 {
-                self.favouriteButton.setTitle("  \(tweet?.favoriteCount ?? 0)", for: .normal)
+            if (tweetToDisplay?.favoriteCount)!>0 {
+                self.favouriteButton.setTitle("  \(tweetToDisplay?.favoriteCount ?? 0)", for: .normal)
             }else{
                 self.favouriteButton.setTitle("", for: .normal)
  

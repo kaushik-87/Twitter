@@ -116,12 +116,13 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     func loadTweetTimeLine() -> Void {
         TwitterClient.sharedInstance.homeTimelineWithParams(params: nil) { (tweets:[Tweet]?,err: Error?) in
             
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-                self.tweets = tweets
-                self.tweetsTableView.reloadData()
+            if tweets != nil {
+                DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
+                    self.tweets = tweets
+                    self.tweetsTableView.reloadData()
+                }
             }
-
         }
     }
 

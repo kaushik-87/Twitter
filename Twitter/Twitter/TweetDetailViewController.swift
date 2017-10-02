@@ -37,6 +37,7 @@ class TweetDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.mediaImageView.layer.cornerRadius = 5
         self.userProfileImageView.layer.cornerRadius = 0.5 * self.userProfileImageView.frame.width
         
         let rightBarbutton = UIBarButtonItem(image: UIImage(named:"Compose"), landscapeImagePhone: nil, style: .plain, target: self, action: #selector(replytoTweet))
@@ -59,11 +60,22 @@ class TweetDetailViewController: UIViewController {
             let veriiedAccount = user?.verifiedAccount
             self.verifiedAccountImageView.isHidden = veriiedAccount! ? false : true
             self.tweetTextView.text = self.tweet?.text
-            self.mediaImageHeightConstraint.constant = 0
-            self.retweetIconImageHeightConstraint.constant = 0
-            self.retweetLabelHeightConstraint.constant = 0
-            self.retweetLabelYConstraint.constant = 0
-            self.retweetIconTopConstraint.constant = 0
+            if self.tweet?.media != nil {
+                self.mediaImageHeightConstraint.constant = 220
+                    //(self.tweet?.media?.mediumSize?.height)!
+                self.mediaImageView.setImageWith(URL(string:(self.tweet?.media?.mediaURL)!)!)
+                self.retweetIconImageHeightConstraint.constant = 0
+                self.retweetLabelHeightConstraint.constant = 0
+                self.retweetLabelYConstraint.constant = 0
+                self.retweetIconTopConstraint.constant = 0
+            }else{
+                self.mediaImageHeightConstraint.constant = 0
+                self.retweetIconImageHeightConstraint.constant = 0
+                self.retweetLabelHeightConstraint.constant = 0
+                self.retweetLabelYConstraint.constant = 0
+                self.retweetIconTopConstraint.constant = 0
+            }
+
             self.tweetDateTimeLabel.text = self.tweet?.createdAtString
             self.retweetCountLabel.text = "\(self.tweet?.retweetedCount ?? 0)"
             self.likesLabel.text = "\(self.tweet?.favoriteCount ?? 0)"
