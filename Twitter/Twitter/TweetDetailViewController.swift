@@ -76,9 +76,13 @@ class TweetDetailViewController: UIViewController {
                 self.retweetIconTopConstraint.constant = 0
             }
 
-            self.tweetDateTimeLabel.text = self.tweet?.createdAtString
-            self.retweetCountLabel.text = "\(self.tweet?.retweetedCount ?? 0)"
-            self.likesLabel.text = "\(self.tweet?.favoriteCount ?? 0)"
+            self.tweetDateTimeLabel.text = TweeterUtility.dateToString(createdDate: (self.tweet?.createdAt)!)
+            let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweet?.retweetedCount)!)
+
+            self.retweetCountLabel.text = "\(retweetCountInstring)"
+            let favCountInstring = TweeterUtility.numberToString(from: (self.tweet?.favoriteCount)!)
+
+            self.likesLabel.text = "\(favCountInstring)"
             if let imgURL = tweet?.user?.profileImageUrl {
                 self.userProfileImageView.setImageWith(NSURL(string:imgURL)! as URL)
             }
@@ -226,12 +230,16 @@ class TweetDetailViewController: UIViewController {
     func updateFav() -> Void {
         let imageName = (self.tweet?.favourited)! ? "Favorite" : "Favorite_black"
         self.favouriteButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
-        self.likesLabel.text = "\(self.tweet?.favoriteCount ?? 0)"
+        let favCountInstring = TweeterUtility.numberToString(from: (self.tweet?.favoriteCount)!)
+
+        self.likesLabel.text = "\(favCountInstring)"
     }
     
     func updateRetweet() {
         let imageName = (self.tweet?.retweeted)! ? "Retweet_green" : "Retweet_black"
         self.retweetButton.setImage(UIImage(named:imageName), for: UIControlState.normal)
-        self.retweetCountLabel.text = "\(self.tweet?.retweetedCount ?? 0)"
+        let retweetCountInstring = TweeterUtility.numberToString(from: (self.tweet?.retweetedCount)!)
+        self.retweetCountLabel.text = "\(retweetCountInstring)"
     }
+
 }

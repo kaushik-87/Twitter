@@ -73,14 +73,18 @@ class TimelineTweetCell: UITableViewCell {
             let retweetImageName = (tweetToDisplay?.retweeted)! ? "Retweet_green" : "Retweet_black"
             self.retweetButton.setImage(UIImage(named:retweetImageName), for: UIControlState.normal)
             if (tweetToDisplay?.retweetedCount)!>0 {
-                self.retweetButton.setTitle(" \(tweetToDisplay?.retweetedCount ?? 0)", for: .normal)
+                let numberInString = TweeterUtility.numberToString(from: (tweetToDisplay?.retweetedCount)!)
+
+                self.retweetButton.setTitle(" \(numberInString)", for: .normal)
  
             }else {
                 self.retweetButton.setTitle("", for: .normal)
  
             }
             if (tweetToDisplay?.favoriteCount)!>0 {
-                self.favouriteButton.setTitle("  \(tweetToDisplay?.favoriteCount ?? 0)", for: .normal)
+                let numberInString = TweeterUtility.numberToString(from: (tweetToDisplay?.favoriteCount)!)
+                
+                self.favouriteButton.setTitle("  \(numberInString)", for: .normal)
             }else{
                 self.favouriteButton.setTitle("", for: .normal)
  
