@@ -28,13 +28,21 @@ class ViewController: UIViewController {
             
             if user != nil {
                 
-                self.performSegue(withIdentifier: "loginSegue", sender: self)
+                self.perform(#selector(self.dismissViewController), with: nil, afterDelay: 1.0)
+               
+                //self.performSegue(withIdentifier: "loginSegue", sender: self)
             }else {
                 
             }
             
         }
 
+    }
+    
+    func dismissViewController() -> Void {
+        self.dismiss(animated: true, completion: {
+            
+        })
     }
 
 }

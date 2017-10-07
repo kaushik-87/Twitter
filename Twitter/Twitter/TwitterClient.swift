@@ -168,6 +168,7 @@ class TwitterClient: BDBOAuth1SessionManager {
                     print("user : \(String(describing: user.name))")
                     User.currentUser = user
                     self.loginCompletion?(user,nil)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
 
                     
                 }, failure: { (dataTask: URLSessionDataTask?, error: Error) in

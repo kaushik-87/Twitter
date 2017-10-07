@@ -16,23 +16,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let storyBoard = UIStoryboard(name: "Main", bundle: nil)
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
+//        window = UIWindow.init(frame: UIScreen.main.bounds)
         NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
             NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
         
+        let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
+        let navController = UINavigationController(rootViewController: vc)
+//        let tabBarController  = UITabBarController.init()
+//        tabBarController.viewControllers = [navController]
+        
+        
+        let hamburgerViewController = self.window?.rootViewController as! HamburgerViewController
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let menuViewController = storyboard.instantiateViewController(withIdentifier: "menuViewController")
+        hamburgerViewController.menuViewController = menuViewController
+        
+        hamburgerViewController.contentViewController = navController
+//        window?.rootViewController = hamburgerViewController
+//        window?.becomeKey()
+        
+        //print("\(self.window?.rootViewController)")
+
+        
         // Override point for customization after application launch.
-        if User.currentUser != nil {
+        if User.currentUser == nil {
             print("current user detected \(User.currentUser?.name)")
             
-            let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
-            let navController = UINavigationController(rootViewController: vc)
-            window?.rootViewController = navController
+            showLoginViewController()
+        }else{
+            
         }
         return true
     }
     
     func userDidLogout() {
-        let vc = storyBoard.instantiateInitialViewController()
-        window?.rootViewController = vc
+//        let vc = storyBoard.instantiateInitialViewController()
+//        window?.rootViewController = vc
+        showLoginViewController()
+    }
+    
+    func showLoginViewController() -> Void {
+//        let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginViewController") as! ViewController
+//        let vc = self.window?.rootViewController
+//
+//        vc?.present(loginViewController, animated: true, completion: { 
+//            
+//        })
+        
         
     }
 
