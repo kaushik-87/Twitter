@@ -29,9 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let hamburgerViewController = self.window?.rootViewController as! HamburgerViewController
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let menuViewController = storyboard.instantiateViewController(withIdentifier: "menuViewController")
+        let menuViewController = storyboard.instantiateViewController(withIdentifier: "menuViewController") as! MenuViewController
         hamburgerViewController.menuViewController = menuViewController
-        
+        menuViewController.hamburgerViewController = hamburgerViewController
         hamburgerViewController.contentViewController = navController
 //        window?.rootViewController = hamburgerViewController
 //        window?.becomeKey()

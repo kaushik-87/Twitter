@@ -27,6 +27,8 @@
 		D7DA8D931F81C97F00347B88 /* Media.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DA8D921F81C97F00347B88 /* Media.swift */; };
 		D7DA8D951F81D19400347B88 /* TweeterUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7DA8D941F81D19400347B88 /* TweeterUtility.swift */; };
 		D7E627EB1F806B8E00C54A26 /* TweetComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7E627EA1F806B8E00C54A26 /* TweetComposeViewController.swift */; };
+		D7FE02C61F895C3500B20EAD /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7FE02C41F895C3500B20EAD /* TweetCell.swift */; };
+		D7FE02C71F895C3500B20EAD /* TweetCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7FE02C51F895C3500B20EAD /* TweetCell.xib */; };
 		F1D33C95B96B682077F8D4B7 /* Pods_TwitterUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F02C952F9864EC49CE84619E /* Pods_TwitterUITests.framework */; };
 		FCF6C5192DE597C82526E7B0 /* Pods_TwitterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1714DFDB74B84D6E8087CEA2 /* Pods_TwitterTests.framework */; };
 /* End PBXBuildFile section */
@@ -81,6 +83,8 @@
 		D7DA8D921F81C97F00347B88 /* Media.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Media.swift; sourceTree = "<group>"; };
 		D7DA8D941F81D19400347B88 /* TweeterUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweeterUtility.swift; sourceTree = "<group>"; };
 		D7E627EA1F806B8E00C54A26 /* TweetComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetComposeViewController.swift; sourceTree = "<group>"; };
+		D7FE02C41F895C3500B20EAD /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
+		D7FE02C51F895C3500B20EAD /* TweetCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetCell.xib; sourceTree = "<group>"; };
 		E0275734595B33946CE87348 /* Pods-TwitterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwitterTests/Pods-TwitterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F02C952F9864EC49CE84619E /* Pods_TwitterUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TwitterUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBB4151CDBF01762830A08E6 /* Pods-TwitterUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TwitterUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TwitterUITests/Pods-TwitterUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +198,8 @@
 				D78120E71F7F0B44007598B7 /* TimelineTweetCell.swift */,
 				D7DA8D941F81D19400347B88 /* TweeterUtility.swift */,
 				D7CAECBB1F7B77090046DC18 /* Main.storyboard */,
+				D7FE02C41F895C3500B20EAD /* TweetCell.swift */,
+				D7FE02C51F895C3500B20EAD /* TweetCell.xib */,
 				D7CAECBE1F7B77090046DC18 /* Assets.xcassets */,
 				D7CAECC01F7B77090046DC18 /* LaunchScreen.storyboard */,
 				D7CAECC31F7B77090046DC18 /* Info.plist */,
@@ -344,6 +350,7 @@
 				D7CAECC21F7B77090046DC18 /* LaunchScreen.storyboard in Resources */,
 				D7CAECBF1F7B77090046DC18 /* Assets.xcassets in Resources */,
 				D7CAECBD1F7B77090046DC18 /* Main.storyboard in Resources */,
+				D7FE02C71F895C3500B20EAD /* TweetCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +525,7 @@
 				D736492E1F7D4BB60088C79A /* TweetsViewController.swift in Sources */,
 				D7CAECB81F7B77090046DC18 /* AppDelegate.swift in Sources */,
 				D78120EA1F7FF543007598B7 /* TweetDetailViewController.swift in Sources */,
+				D7FE02C61F895C3500B20EAD /* TweetCell.swift in Sources */,
 				D73648761F7C8B800088C79A /* User.swift in Sources */,
 				D73648741F7C8B730088C79A /* Tweet.swift in Sources */,
 			);

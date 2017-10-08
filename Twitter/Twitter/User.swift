@@ -23,7 +23,9 @@ let dictionaryKey       = "description"
 let locationKey         = "location"
 let followingCountKey   = "following"
 let followersCountKey   = "followers_count"
+let friendsCountKey     = "friends_count"
 let verifiedAccountKey  = "verified"
+let profileBannerURLKey    = "profile_banner_url"
 
 
 
@@ -37,6 +39,8 @@ class User: NSObject {
     var followersCount: Int?
     var verifiedAccount: Bool?
     var userDictionary : NSDictionary?
+    var profileBannerURL : String?
+    var profileDescription : String?
 
     init(dictionary: NSDictionary) {
         let json = JSON(dictionary)
@@ -47,8 +51,10 @@ class User: NSObject {
         tagline = json[taglineKey].stringValue
         location = json[locationKey].stringValue
         followersCount = json[followersCountKey].intValue
-        followingCount = json[followingCountKey].intValue
+        followingCount = json[friendsCountKey].intValue
         verifiedAccount = json[verifiedAccountKey].boolValue
+        profileBannerURL = json[profileBannerURLKey].stringValue
+        profileDescription = json[taglineKey].stringValue
         self.userDictionary = dictionary
     }
     
