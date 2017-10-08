@@ -7,6 +7,9 @@
 //
 
 import UIKit
+let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
+let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
 
 class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -39,6 +42,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         tweets = [Tweet]()
+        self.profileImageView.layer.cornerRadius = 0.5 * self.profileImageView.frame.size.width
+        self.profileImageView.layer.borderWidth = 4
+        self.profileImageView.layer.borderColor = UIColor.white.cgColor
+        self.profileImageView.clipsToBounds = true
         let nib = UINib(nibName: "TweetCell", bundle: nil)
         self.profileTableView.register(nib, forCellReuseIdentifier: "tweetCell")
         self.profileTableView.estimatedRowHeight = self.profileTableView.rowHeight
@@ -236,14 +243,33 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        print("Scroll offset \(scrollView.contentOffset.y)")
+        var avatarTransform = CATransform3DIdentity
+        var headerTransform = CATransform3DIdentity
         if scrollView.contentOffset.y <= 0{
             self.topSpaceConstraint.constant = scrollView.contentOffset.y 
-        print("Scroll offset \(scrollView.contentOffset.y)")
             self.bannerImageHeightConstraint.constant = self.bannerImageOriginalHeight - scrollView.contentOffset.y
             
-            print("\(self.bannerImageHeightConstraint.constant)")
+            
+            
+//            print("\(self.bannerImageHeightConstraint.constant)")
             self.profileHeaderView.layoutIfNeeded()
+            
+           
         }
+
+        if (scrollView.contentOffset.y >= -18) {
+            let avatarScaleFactor = (min(offset_HeaderStop, scrollView.contentOffset.y)) / self.profileImageView.bounds.height / 1.4 // Slow down the animation
+            print("scale factor \(avatarScaleFactor)")
+            let avatarSizeVariation = ((self.profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - self.profileImageView.bounds.height) / 2.0
+            
+            print("Variation \(avatarScaleFactor)")
+
+            avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
+            avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+        }
+        
+         self.profileImageView.layer.transform = avatarTransform
     }
     
     

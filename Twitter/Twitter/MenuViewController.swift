@@ -11,14 +11,22 @@ import UIKit
 class MenuViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuCell
-        
-        cell.cellLabel.text = menuDataSource[indexPath.row]["name"]
-        cell.cellImageView.image = UIImage(named: menuDataSource[indexPath.row]["imageName"]!)
+        if menuDataSource.count>0 {
+            if  menuDataSource[indexPath.row]["name"] != "" {
+                cell.cellLabel.text = menuDataSource[indexPath.row]["name"]
+                if let image = menuDataSource[indexPath.row]["imageName"] {
+                    cell.cellImageView.image = UIImage(named: image)
+
+                }
+            }
+        }
         return cell
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return menuDataSource.count
+        
+        let count = menuDataSource.count>0 ? menuDataSource.count : 0
+        return count
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -74,6 +82,17 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func loadAccounts() -> Void {
+//         User.currentUser?.logout()
+        hamburgerViewController?.closeMenu()
+
+        
+        if let navController = hamburgerViewController?.contentViewController as? UINavigationController {
+            let accountsViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "AccountsViewController") as! AccountsViewController
+            navController.pushViewController(accountsViewController, animated: true)
+//            accountsViewController.currentUser = User.currentUser
+            //                profileViewController.loadProfileDetailsFor(user : User.currentUser)
+        }
+        
         
     }
     
@@ -106,7 +125,33 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         // ["imageName": "home" , "name" : "Home Timeline"],
+        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name:
+            NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
+        if User.currentUser != nil {
+            loadMenuViewForUser()
+        }
+
+        NotificationCenter.default.addObserver(self, selector: #selector(accountsDidSwitchAccount), name:
+            NSNotification.Name(rawValue: accountManagerDidSwitchUserNotification), object: nil)
         
+
+        // Do any additional setup after loading the view.
+        
+    }
+    
+    
+    
+    func accountsDidSwitchAccount() -> Void {
+        loadMenuViewForUser()
+        
+    }
+    
+    func userDidLogin() -> Void {
+        
+        loadMenuViewForUser()
+    }
+    
+    func loadMenuViewForUser() -> Void {
         self.profileName.text = User.currentUser?.name
         self.profileScreenName.text = "@"+(User.currentUser?.screenName)!
         if let imgURL = User.currentUser?.profileImageUrl {
@@ -116,9 +161,6 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         menuDataSource = [["imageName": "Profile" , "name" : "Profile"], ["imageName": "Mentions" , "name" : "Mentions"], ["imageName": "Accounts" , "name" : "Accounts"]]
         self.menuTableView.reloadData()
-
-        // Do any additional setup after loading the view.
-        
     }
 
     override func didReceiveMemoryWarning() {

@@ -166,20 +166,50 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         self.tweetsTableView.rowHeight = UITableViewAutomaticDimension
         self.tweetsTableView.estimatedRowHeight = 140
         
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
-            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name:
-            NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
+//            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogin), name:
+//            NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(accountsDidSwitchAccount), name:
+            NSNotification.Name(rawValue: accountManagerDidSwitchUserNotification), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(noLoggedInUser), name:
+            NSNotification.Name(rawValue: accountManagerNoLoggedInUsersNotification), object: nil)
         
         loadTweetTimeLine()
         // Do any additional setup after loading the view.
     }
     
     
+    func accountsDidSwitchAccount() -> Void {
+//        loadTweetTimeLine()
+        TwitterClient.sharedInstance.homeTimelineWithParams(params: nil) { (tweets:[Tweet]?,err: Error?) in
+            
+            if tweets != nil {
+                DispatchQueue.main.async {
+                    self.refreshControl.endRefreshing()
+                    self.tweets = tweets
+                    self.tweetsTableView.reloadData()
+                }
+            }
+        }
+
+    }
+    
     func userDidLogin() -> Void {
         
         loadTweetTimeLine()
+    }
+    func noLoggedInUser() -> Void {
+        
+        self.tweets?.removeAll()
+        self.tweetsTableView.reloadData()
+        
+        let loginViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "loginViewController") as! ViewController
+        
+        self.present(loginViewController, animated: true, completion: {
+            
+        })
     }
     
     func userDidLogout() -> Void {

@@ -17,15 +17,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
 //        window = UIWindow.init(frame: UIScreen.main.bounds)
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
-            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
+//            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(noLoggedInUser), name:
+            NSNotification.Name(rawValue: accountManagerNoLoggedInUsersNotification), object: nil)
+        
         
         let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
         let navController = UINavigationController(rootViewController: vc)
 //        navController.navigationBar.barTintColor = UIColor.clear
 //        navController.navigationBar.isTranslucent = false
-        navController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        navController.navigationBar.shadowImage = UIImage()
+//        navController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        navController.navigationBar.shadowImage = UIImage()
         navController.navigationBar.isTranslucent = true
 //        let tabBarController  = UITabBarController.init()
         
@@ -51,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             showLoginViewController()
         }else{
-            
+            AccountsManager.sharedInstance.addUserToAccounts(user: User.currentUser!)
         }
         return true
     }
@@ -60,6 +64,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        let vc = storyBoard.instantiateInitialViewController()
 //        window?.rootViewController = vc
         showLoginViewController()
+    }
+    
+    func noLoggedInUser() {
+        showLoginViewController()
+
     }
     
     func showLoginViewController() -> Void {

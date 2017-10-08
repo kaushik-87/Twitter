@@ -33,8 +33,11 @@ class HamburgerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
-            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
+//            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(noLoggedInUser), name:
+            NSNotification.Name(rawValue: accountManagerNoLoggedInUsersNotification), object: nil)
         
         if User.currentUser == nil {
 
@@ -46,7 +49,10 @@ class HamburgerViewController: UIViewController {
     
     func userDidLogout() -> Void {
         closeMenu()
-
+    }
+    
+    func noLoggedInUser() -> Void {
+        closeMenu()
     }
 
     @IBAction func onPangesture(_ sender: UIPanGestureRecognizer) {

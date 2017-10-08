@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import BDBOAuth1Manager
 var _currentUser: User?
 let currentUserKey = "kCurrentUserKey"
 let userDidLoginNotification = "userDidLoginNotification"
@@ -41,6 +42,8 @@ class User: NSObject {
     var userDictionary : NSDictionary?
     var profileBannerURL : String?
     var profileDescription : String?
+    var accessToken : String?
+    var bdbAccessCredential : BDBOAuth1Credential?
 
     init(dictionary: NSDictionary) {
         let json = JSON(dictionary)

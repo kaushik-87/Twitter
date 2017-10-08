@@ -507,24 +507,24 @@
                         <viewControllerLayoutGuide type="bottom" id="xoj-3J-uMM"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="NAI-is-0tD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nothing to see here. Yet." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucA-UY-PZN">
-                                <rect key="frame" x="70" y="322" width="234" height="23"/>
+                                <rect key="frame" x="70" y="290" width="234" height="23"/>
                                 <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="luF-Sr-Niz">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="180" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="luF-Sr-Niz">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tweetCell" id="Rh0-cc-nAn" customClass="TweetCell" customModule="Twitter" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="180" id="Rh0-cc-nAn" customClass="TweetCell" customModule="Twitter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="180"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Rh0-cc-nAn" id="VWT-l9-ayC">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="179.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -545,6 +545,7 @@
                             <constraint firstItem="luF-Sr-Niz" firstAttribute="top" secondItem="NAI-is-0tD" secondAttribute="top" id="wsn-bO-QVb"/>
                         </constraints>
                     </view>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="mentionsTableView" destination="luF-Sr-Niz" id="Iq2-FP-w3I"/>
                     </connections>
@@ -552,6 +553,99 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="beq-s2-vbI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1600.8" y="-1312.8935532233884"/>
+        </scene>
+        <!--Accounts View Controller-->
+        <scene sceneID="NRk-OB-FCs">
+            <objects>
+                <viewController storyboardIdentifier="AccountsViewController" id="o8a-0u-Qg4" customClass="AccountsViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="npd-fb-XYM"/>
+                        <viewControllerLayoutGuide type="bottom" id="HWE-Uv-dNb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aQa-JJ-M6A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="130" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="i72-ZU-w92">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="accountsCell" rowHeight="130" id="gnF-jA-W0K" customClass="AccountsCell" customModule="Twitter" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="130"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gnF-jA-W0K" id="iQq-9P-XuY">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="129.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="m6j-13-xS5">
+                                                    <rect key="frame" x="118" y="66.5" width="47.5" height="37.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="idj-cI-XdS">
+                                                            <rect key="frame" x="0.0" y="0.0" width="47.5" height="21"/>
+                                                            <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="18"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jcr-E1-rJd">
+                                                            <rect key="frame" x="0.0" y="21" width="34.5" height="16.5"/>
+                                                            <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                                            <color key="textColor" red="0.65733681509999997" green="0.65733681509999997" blue="0.65733681509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6uS-s0-HpI">
+                                                    <rect key="frame" x="28" y="24" width="80" height="80"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="Fsg-qv-HSJ"/>
+                                                        <constraint firstAttribute="height" constant="80" id="wyP-Ak-hy7"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pjq-yr-e83">
+                                                    <rect key="frame" x="125" y="53" width="124" height="23"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="6uS-s0-HpI" firstAttribute="leading" secondItem="iQq-9P-XuY" secondAttribute="leadingMargin" constant="20" id="ALC-fm-S3M"/>
+                                                <constraint firstItem="6uS-s0-HpI" firstAttribute="top" secondItem="iQq-9P-XuY" secondAttribute="topMargin" constant="16" id="JO1-Db-vsF"/>
+                                                <constraint firstItem="m6j-13-xS5" firstAttribute="bottom" secondItem="6uS-s0-HpI" secondAttribute="bottom" id="Qxg-qV-htD"/>
+                                                <constraint firstItem="m6j-13-xS5" firstAttribute="leading" secondItem="6uS-s0-HpI" secondAttribute="trailing" constant="10" id="w1x-ge-tuz"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="accountName" destination="idj-cI-XdS" id="XtZ-e4-qqf"/>
+                                            <outlet property="addAcountLabel" destination="pjq-yr-e83" id="xOY-FP-Pgf"/>
+                                            <outlet property="profileImageView" destination="6uS-s0-HpI" id="O0q-oA-6kS"/>
+                                            <outlet property="profileName" destination="idj-cI-XdS" id="5N9-RK-LMf"/>
+                                            <outlet property="profileScreenName" destination="jcr-E1-rJd" id="Psi-IM-h0W"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="o8a-0u-Qg4" id="uVE-lI-ywb"/>
+                                    <outlet property="delegate" destination="o8a-0u-Qg4" id="OMx-f2-hCr"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HWE-Uv-dNb" firstAttribute="top" secondItem="i72-ZU-w92" secondAttribute="bottom" id="5AE-TE-MQd"/>
+                            <constraint firstAttribute="trailing" secondItem="i72-ZU-w92" secondAttribute="trailing" id="DB1-uV-lJD"/>
+                            <constraint firstItem="i72-ZU-w92" firstAttribute="leading" secondItem="aQa-JJ-M6A" secondAttribute="leading" id="Zef-9s-B1s"/>
+                            <constraint firstItem="i72-ZU-w92" firstAttribute="top" secondItem="aQa-JJ-M6A" secondAttribute="top" id="fW7-nR-Tgc"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="accountsTableView" destination="i72-ZU-w92" id="Sne-IU-hd7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G07-ij-WWx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2340" y="-1307.4962518740631"/>
         </scene>
         <!--Home-->
         <scene sceneID="r1a-SE-3uS">

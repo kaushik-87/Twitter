@@ -15,6 +15,7 @@ let twitterConsumerKey = "VryCdIDG9zyLVxghGMwWtc39b"
 let twitterConsumerSecret = "NXuCSAkXM1wbDIexybY2rGGxBrOSVomSs7owZaTc3zAqCwlP1k"
 //"9dib7dqmdHcMkOroNQ2I1xsMOr1hqhHd6V9wpkrWzRNsP4O9CA"
 let twitterBaseURL = NSURL(string: "https://api.twitter.com")
+let accessTokenKey = ""
 let count = 50
 
 
@@ -34,6 +35,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         
         // fetch request token
         TwitterClient.sharedInstance.fetchRequestToken(withPath: "oauth/request_token", method: "GET", callbackURL: NSURL(string : "kttwitterdemo://oauth")! as URL, scope: nil, success: { ( requestToken : BDBOAuth1Credential?) in
+            print("Request Token \(requestToken?.token)")
             if let token = requestToken {
                 if let authURL = NSURL(string:"https://api.twitter.com/oauth/authorize?oauth_token=\(token.token!)") {
                     UIApplication.shared.open(authURL as URL, options: ["" : ""], completionHandler: { (Success : Bool) in
@@ -76,7 +78,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     
     func homeTimeLineFetchNextTweets(fromTweet : Tweet, completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void {
-        let params = ["count":count,"max_id":fromTweet.id!] as NSDictionary
+        let params = ["count":count,"max_id":fromTweet.id!, "access_token":User.currentUser?.accessToken ?? ""] as NSDictionary
         homeTimelineWithParams(params: params, completion: completion)
     }
     
@@ -191,14 +193,19 @@ class TwitterClient: BDBOAuth1SessionManager {
             BDBOAuth1Credential(queryString: url?.query), success: { (accessToken: BDBOAuth1Credential?) in
                 
                 print("Got access token")
-                TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
+                //TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
                 
+                let accessTokenInString  = accessToken?.token
+                let bdbAccessCredential = accessToken
                 TwitterClient.sharedInstance.get("1.1/account/verify_credentials.json", parameters: nil, progress: nil, success: { (dataTask : URLSessionDataTask, response : Any?) in
                     
                     print("Response\(String(describing: response))")
-                    let user = User(dictionary: response as! NSDictionary)
+                    let user = User(dictionary: response as! NSDictionary) 
+                    user.accessToken = accessTokenInString
+                    user.bdbAccessCredential = bdbAccessCredential
                     print("user : \(String(describing: user.name))")
                     User.currentUser = user
+                    AccountsManager.sharedInstance.addUserToAccounts(user: user)
                     self.loginCompletion?(user,nil)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: userDidLoginNotification), object: nil)
 
