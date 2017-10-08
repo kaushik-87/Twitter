@@ -33,16 +33,18 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     var currentUser : User?
     var bannerImageOriginalHeight: CGFloat = 95
     var isViewDidAppear = false
+    var tweets : [Tweet]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+        tweets = [Tweet]()
         let nib = UINib(nibName: "TweetCell", bundle: nil)
         self.profileTableView.register(nib, forCellReuseIdentifier: "tweetCell")
         self.profileTableView.estimatedRowHeight = self.profileTableView.rowHeight
         self.profileTableView.rowHeight = UITableViewAutomaticDimension
         loadViewForUserProfile(user: currentUser)
+        loadUserTweets()
 
     }
 
@@ -160,7 +162,17 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func loadUserTweets() -> Void {
-        
+        TwitterClient.sharedInstance.fetchUserTweetsTimeline(user: currentUser) { (tweets: [Tweet]?, error: Error?) in
+            if tweets != nil {
+                DispatchQueue.main.async {
+                    self.tweets = tweets
+                    self.profileTableView.reloadData()
+                }
+            }
+            else{
+                
+            }
+        }
     }
 
     func loadUserTweetsWithMedia() -> Void {
@@ -173,7 +185,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return (self.tweets?.count)!
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -216,7 +228,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell", for: indexPath) as! TweetCell
+        if (self.tweets?.count)!>0 {
+            cell.tweet = self.tweets?[indexPath.row]
+        }
         return cell
     }
     

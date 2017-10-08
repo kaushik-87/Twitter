@@ -85,6 +85,26 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
+    func  fetchUserTweetsTimeline(user: User?, completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void  {
+        if let screenName = user?.screenName {
+            fetchProfileTimeline(params: ["count":count, "screen_name": screenName], completion: completion)
+        }else{
+            print("User doesnot contain screen name!!!")
+        }
+    }
+    
+    func fetchProfileTimeline(params: NSDictionary?, completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void  {
+        get("1.1/statuses/user_timeline.json", parameters: params
+            , progress: nil, success: { (task: URLSessionDataTask, response :Any?) in
+                print("Timeline \(String(describing: response))")
+                let tweets = Tweet.tweetsWithArray(array: response as! [NSDictionary])
+                completion(tweets, nil)
+        }, failure: { (task:URLSessionDataTask?, error:Error) in
+            print("error")
+            completion(nil,error)
+        })
+    }
+    
     func postReply(tweetText: String, toTweet: Tweet, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
         
         postTweet(params: ["status":tweetText,"in_reply_to_status_id":toTweet.id!], completion: completion)
