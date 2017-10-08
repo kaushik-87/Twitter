@@ -196,10 +196,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         headerView.backgroundColor = UIColor.white
-        let segmentControl = UISegmentedControl(items: ["Tweets", "Media", "Likes"])
+        let segmentControl = UISegmentedControl(items: ["Tweets", "Mentions", "Likes"])
         segmentControl.frame = headerView.bounds
         segmentControl.backgroundColor = UIColor.white
-        segmentControl.tintColor = UIColor.darkGray
+        segmentControl.tintColor = UIColor(red:0.00, green:0.52, blue:0.71, alpha:1.0)
         segmentControl.selectedSegmentIndex = 0
         segmentControl.center = headerView.center
         segmentControl.addTarget(self, action: #selector(segmentSelectionChanged(_:)), for: .valueChanged)

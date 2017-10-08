@@ -22,7 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
         let navController = UINavigationController(rootViewController: vc)
+//        navController.navigationBar.barTintColor = UIColor.clear
+//        navController.navigationBar.isTranslucent = false
+        navController.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navController.navigationBar.shadowImage = UIImage()
+        navController.navigationBar.isTranslucent = true
 //        let tabBarController  = UITabBarController.init()
+        
 //        tabBarController.viewControllers = [navController]
         
         

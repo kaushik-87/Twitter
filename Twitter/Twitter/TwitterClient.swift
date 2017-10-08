@@ -105,13 +105,25 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
+    func fetchMentionsTimeline(completion: @escaping (_ tweets: [Tweet]?, _ error : Error?)->()) -> Void {
+        get("1.1/statuses/mentions_timeline.json", parameters: ["count":count]
+            , progress: nil, success: { (task: URLSessionDataTask, response :Any?) in
+                print("Timeline \(String(describing: response))")
+                let tweets = Tweet.tweetsWithArray(array: response as! [NSDictionary])
+                completion(tweets, nil)
+        }, failure: { (task:URLSessionDataTask?, error:Error) in
+            print("error")
+            completion(nil,error)
+        })
+    }
+    
     func postReply(tweetText: String, toTweet: Tweet, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
         
         postTweet(params: ["status":tweetText,"in_reply_to_status_id":toTweet.id!], completion: completion)
     }
     
     func postTweet(params: NSDictionary?, completion : @escaping (_ twwet: Tweet?, _ error : Error?)->()) -> Void {
-        let urlString = "/1.1/statuses/update.json"
+        let urlString = "/1.1/statuses/mentions_timeline.json"
         post(urlString, parameters: params, progress: nil, success: { (task :URLSessionDataTask, response :Any?) in
             print("Success Response =\(response)")
             let tweet = Tweet(dictionary: response as! NSDictionary)

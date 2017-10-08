@@ -15,6 +15,7 @@ import NSDateMinimalTimeAgo
     @objc optional func tweetCell(cell: TimelineTweetCell, didTapOnRetweetButtonForTweet: Tweet)
     @objc optional func tweetCell(cell: TimelineTweetCell, didTapOnFavButtonForTweet: Tweet)
     @objc optional func tweetCell(cell: TimelineTweetCell, didTapOnReplyButtonForTweet: Tweet)
+    @objc optional func tweetCell(cell: TimelineTweetCell, didTapOnUserIconForTweet: Tweet)
 }
 
 
@@ -114,10 +115,19 @@ class TimelineTweetCell: UITableViewCell {
         // Initialization code
         self.mediaImageView.layer.cornerRadius = 5
         self.userIconImageView.layer.cornerRadius = 0.5 * self.userIconImageView.frame.width
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(userIconTapped))
+        self.userIconImageView.addGestureRecognizer(tapGestureRecognizer)
         replyButton.addTarget(self, action: #selector(replyButtonTapped), for: UIControlEvents.touchUpInside)
         retweetButton.addTarget(self, action: #selector(reTweetButtonTapped), for: UIControlEvents.touchUpInside)
         favouriteButton.addTarget(self, action: #selector(favButtonTapped), for: UIControlEvents.touchUpInside)
 
+    }
+    
+    func userIconTapped(_ sender: UITapGestureRecognizer) -> Void {
+        print("Tapped on user icon")
+        if self.tweetCellDelegate != nil {
+            self.tweetCellDelegate?.tweetCell!(cell: self, didTapOnUserIconForTweet: self.tweet!)
+        }
     }
     
     func replyButtonTapped() -> Void {

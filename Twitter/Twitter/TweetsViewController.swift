@@ -53,8 +53,17 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         
     }
-    func tweetCell(cell: TimelineTweetCell, didTapOnReplyButtonForTweet: Tweet) {
+    func tweetCell(cell: TimelineTweetCell, didTapOnReplyButtonForTweet tweet: Tweet) {
+
+    }
+
+    func tweetCell(cell: TimelineTweetCell, didTapOnUserIconForTweet tweet: Tweet) {
         
+        
+        let profileViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "profileViewController") as! ProfileViewController
+        self.navigationController?.pushViewController(profileViewController, animated: true)
+        profileViewController.currentUser = tweet.user
+        //                profileViewController.loadProfileDetailsFor(user : User.currentUser)
         
     }
     func tweetCell(cell: TimelineTweetCell, didTapOnRetweetButtonForTweet tweet: Tweet) {
