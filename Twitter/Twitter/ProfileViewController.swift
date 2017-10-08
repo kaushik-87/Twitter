@@ -38,6 +38,10 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+        let nib = UINib(nibName: "TweetCell", bundle: nil)
+        self.profileTableView.register(nib, forCellReuseIdentifier: "tweetCell")
+        self.profileTableView.estimatedRowHeight = self.profileTableView.rowHeight
+        self.profileTableView.rowHeight = UITableViewAutomaticDimension
         loadViewForUserProfile(user: currentUser)
 
     }
@@ -79,7 +83,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.descriptionTextView.text = ""
             self.descriptionScrollView.isScrollEnabled = false
         }
-        
+    
         
         self.tweetsCountLabel.isHidden = true
         
@@ -108,12 +112,44 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         if !self.isViewDidAppear{
             self.isViewDidAppear = true
 //        self.profileHeaderView.setNeedsLayout()
-//        self.profileHeaderView.layoutIfNeeded()
+        self.profileHeaderView.layoutIfNeeded()
 //        self.profileHeaderView.frame.size = self.profileHeaderView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 //        self.profileTableView.tableHeaderView = self.profileHeaderView
         }
         
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
+        // The table view header is created with the frame size set in
+        // the Storyboard. Calculate the new size and reset the header
+        // view to trigger the layout.
+        // Calculate the minimum height of the header view that allows
+        // the text label to fit its preferred width.
+        
+        let size = self.profileHeaderView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
+
+        let newSize = CGSize(width: size.width, height: size.height + self.descriptionScrollView.contentSize.height)
+        
+        if self.profileHeaderView.frame.size.height != newSize.height {
+            self.profileHeaderView.frame.size.height = newSize.height
+            
+            // Need to set the header view property of the table view
+            // to trigger the new layout. Be careful to only do this
+            // once when the height changes or we get stuck in a layout loop.
+            self.profileTableView.tableHeaderView = self.profileHeaderView
+            
+            // Now that the table view header is sized correctly have
+            // the table view redo its layout so that the cells are
+            // correcly positioned for the new header size.
+            // This only seems to be necessary on iOS 9.
+            self.profileTableView.layoutIfNeeded()
+        }
+    }
+    
+    
     
     func  loadProfileDetailsFor(user : User?) -> Void {
         
@@ -123,8 +159,60 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     
+    func loadUserTweets() -> Void {
+        
+    }
+
+    func loadUserTweetsWithMedia() -> Void {
+        
+    }
+    
+    func loadUserTweetsWithLikes() -> Void {
+        
+    }
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 10
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
+        headerView.backgroundColor = UIColor.white
+        let segmentControl = UISegmentedControl(items: ["Tweets", "Media", "Likes"])
+        segmentControl.frame = headerView.bounds
+        segmentControl.backgroundColor = UIColor.white
+        segmentControl.tintColor = UIColor.darkGray
+        segmentControl.selectedSegmentIndex = 0
+        segmentControl.center = headerView.center
+        segmentControl.addTarget(self, action: #selector(segmentSelectionChanged(_:)), for: .valueChanged)
+        segmentControl.removeBorders()
+        headerView.addSubview(segmentControl)
+        return headerView
+    }
+    func segmentSelectionChanged(_ sender: UISegmentedControl) -> Void {
+        print("\(sender.selectedSegmentIndex)")
+        switch sender.selectedSegmentIndex {
+        case 1:
+            loadUserTweetsWithMedia()
+            break
+        case 2:
+            loadUserTweetsWithLikes()
+            break
+        default:
+            // in case of segment 0
+            loadUserTweets()
+            break
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -154,5 +242,27 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Pass the selected object to the new view controller.
     }
     */
-
 }
+
+
+extension UISegmentedControl {
+    func removeBorders() {
+        setBackgroundImage(imageWithColor(color: backgroundColor!), for: .normal, barMetrics: .default)
+        setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
+        setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+    }
+    
+    // create a 1x1 image with this color
+    private func imageWithColor(color: UIColor) -> UIImage {
+        let rect = CGRect(x: 0.0, y: 0.0, width:  1.0, height: 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+        context!.setFillColor(color.cgColor);
+        context!.fill(rect);
+        let image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        return image!
+    }
+}
+
+
