@@ -27,7 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let vc = storyBoard.instantiateViewController(withIdentifier: "tweetsViewController")
         let navController = UINavigationController(rootViewController: vc)
-//        navController.navigationBar.barTintColor = UIColor.clear
+        navController.navigationBar.barTintColor = UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0)
+        navController.navigationBar.tintColor = UIColor.white
+//        navController.navigationItem.backBarButtonItem?.tintColor = UIColor.white
+//        navController.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
+//        navController.navigationItem.rightBarButtonItem?.tintColor = UIColor.white
 //        navController.navigationBar.isTranslucent = false
 //        navController.navigationBar.setBackgroundImage(UIImage(), for: .default)
 //        navController.navigationBar.shadowImage = UIImage()

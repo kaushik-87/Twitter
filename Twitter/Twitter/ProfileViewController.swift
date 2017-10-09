@@ -7,7 +7,7 @@
 //
 
 import UIKit
-let offset_HeaderStop:CGFloat = 40.0 // At this offset the Header stops its transformations
+let offset_HeaderStop:CGFloat = 64.0 // At this offset the Header stops its transformations
 let offset_B_LabelHeader:CGFloat = 95.0 // At this offset the Black label reaches the Header
 let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of the Header and the top of the White Label
 
@@ -34,13 +34,16 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     @IBOutlet weak var topSpaceConstraint: NSLayoutConstraint!
     
     var currentUser : User?
-    var bannerImageOriginalHeight: CGFloat = 95
+    var bannerImageOriginalHeight: CGFloat = 75
     var isViewDidAppear = false
     var tweets : [Tweet]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
         tweets = [Tweet]()
         self.profileImageView.layer.cornerRadius = 0.5 * self.profileImageView.frame.size.width
         self.profileImageView.layer.borderWidth = 4
@@ -52,9 +55,9 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.profileTableView.rowHeight = UITableViewAutomaticDimension
         loadViewForUserProfile(user: currentUser)
         loadUserTweets()
-
     }
 
+    
     @IBAction func pageControlChanged(_ sender: UIPageControl) {
         print("\(self.descriptionScrollView.contentOffset)")
         let contentOffSetX = sender.currentPage == 1 ? self.descriptionScrollView.contentSize.width - self.descriptionScrollView.frame.size.width : 0.0
@@ -140,7 +143,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let size = self.profileHeaderView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
-        let newSize = CGSize(width: size.width, height: size.height + self.descriptionScrollView.contentSize.height + 20)
+        let newSize = CGSize(width: size.width, height: size.height + self.descriptionScrollView.contentSize.height)
         
         if self.profileHeaderView.frame.size.height != newSize.height {
             self.profileHeaderView.frame.size.height = newSize.height
@@ -206,7 +209,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         let segmentControl = UISegmentedControl(items: ["Tweets", "Mentions", "Likes"])
         segmentControl.frame = headerView.bounds
         segmentControl.backgroundColor = UIColor.white
-        segmentControl.tintColor = UIColor(red:0.00, green:0.52, blue:0.71, alpha:1.0)
+        segmentControl.tintColor = UIColor(red:0.00, green:0.67, blue:0.93, alpha:1.0)
         segmentControl.selectedSegmentIndex = 0
         segmentControl.center = headerView.center
         segmentControl.addTarget(self, action: #selector(segmentSelectionChanged(_:)), for: .valueChanged)
@@ -243,9 +246,11 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
      func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print("Scroll offset \(scrollView.contentOffset.y)")
+        print("Scroll offset \(scrollView.contentOffset.y)")
         var avatarTransform = CATransform3DIdentity
         var headerTransform = CATransform3DIdentity
+        
+        
         if scrollView.contentOffset.y <= 0{
             self.topSpaceConstraint.constant = scrollView.contentOffset.y 
             self.bannerImageHeightConstraint.constant = self.bannerImageOriginalHeight - scrollView.contentOffset.y
@@ -256,20 +261,58 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
             self.profileHeaderView.layoutIfNeeded()
             
            //(scrollView.contentOffset.y >= -18)
-        }else  {
-            let avatarScaleFactor = (min(offset_HeaderStop, scrollView.contentOffset.y)) / self.profileImageView.bounds.height / 1.4 // Slow down the animation
+        }
+        
+        if (scrollView.contentOffset.y >= -20) {
+            var offset = scrollView.contentOffset.y
+            if offset <= 0 {
+                offset = -20 - offset
+            }
+            var avatarScaleFactor = (min(offset_HeaderStop, offset)) / self.profileImageView.bounds.height / 1.4 // Slow down the animation
+//            if avatarScaleFactor<0 {
+                avatarScaleFactor = abs(avatarScaleFactor)
+//            }
             print("scale factor \(avatarScaleFactor)")
             let avatarSizeVariation = ((self.profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - self.profileImageView.bounds.height) / 2.0
             
             print("Variation \(avatarScaleFactor)")
-
+            
             avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
             avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
         }
         
+//        if (scrollView.contentOffset.y >= -18) {
+//            var offset = scrollView.contentOffset.y
+////
+////            if (scrollView.contentOffset.y <= 0 ) {
+////                offset = 18 - scrollView.contentOffset.y
+////            }
+//            let avatarScaleFactor = (min(offset_HeaderStop, offset)) / self.profileImageView.bounds.height / 1.4 // Slow down the animation
+//            print("scale factor \(avatarScaleFactor)")
+//            let avatarSizeVariation = ((self.profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - self.profileImageView.bounds.height) / 2.0
+//            
+//            print("Variation \(avatarScaleFactor)")
+//
+//            avatarTransform = CATransform3DTranslate(avatarTransform, 0, avatarSizeVariation, 0)
+//            avatarTransform = CATransform3DScale(avatarTransform, 1.0 - avatarScaleFactor, 1.0 - avatarScaleFactor, 0)
+//        }
+        
          self.profileImageView.layer.transform = avatarTransform
     }
     
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+            self.profileBannerImageView.addBlurEffect()
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        
+        //self.profileBannerImageView.addBlurEffect()
+        UIView.animate(withDuration: 0.3) {
+            self.profileBannerImageView.removeBlurrEffect()
+        }
+    }
+
     
     
     /*
@@ -284,11 +327,13 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 }
 
 
+
+
 extension UISegmentedControl {
     func removeBorders() {
         setBackgroundImage(imageWithColor(color: backgroundColor!), for: .normal, barMetrics: .default)
         setBackgroundImage(imageWithColor(color: tintColor!), for: .selected, barMetrics: .default)
-        setDividerImage(imageWithColor(color: UIColor.clear), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
+        setDividerImage(imageWithColor(color: UIColor.white), forLeftSegmentState: .normal, rightSegmentState: .normal, barMetrics: .default)
     }
     
     // create a 1x1 image with this color
@@ -304,4 +349,24 @@ extension UISegmentedControl {
     }
 }
 
+extension UIImageView
+{
+    func addBlurEffect()
+    {
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = self.bounds
+        
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // for supporting device rotation
+        self.addSubview(blurEffectView)
+    }
+    
+    func removeBlurrEffect() -> Void {
+        for subview in self.subviews {
+            if subview is UIVisualEffectView {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+}
 
