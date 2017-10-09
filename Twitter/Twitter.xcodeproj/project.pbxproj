@@ -17,6 +17,10 @@
 		D77D4BDB1F88016F0021D3B3 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D77D4BDA1F88016F0021D3B3 /* HamburgerViewController.swift */; };
 		D78120E81F7F0B44007598B7 /* TimelineTweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78120E71F7F0B44007598B7 /* TimelineTweetCell.swift */; };
 		D78120EA1F7FF543007598B7 /* TweetDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78120E91F7FF543007598B7 /* TweetDetailViewController.swift */; };
+		D7B637F71F8AEB1F00F832C8 /* TwitterTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B637F61F8AEB1F00F832C8 /* TwitterTheme.swift */; };
+		D7B637F91F8AEDFB00F832C8 /* TwitterScreenNameLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B637F81F8AEDFB00F832C8 /* TwitterScreenNameLabel.swift */; };
+		D7B637FC1F8AF7C800F832C8 /* TwitterThemeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B637FB1F8AF7C800F832C8 /* TwitterThemeButton.swift */; };
+		D7B637FE1F8B010300F832C8 /* TwitterBGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7B637FD1F8B010300F832C8 /* TwitterBGView.swift */; };
 		D7CAECB81F7B77090046DC18 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CAECB71F7B77090046DC18 /* AppDelegate.swift */; };
 		D7CAECBA1F7B77090046DC18 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CAECB91F7B77090046DC18 /* ViewController.swift */; };
 		D7CAECBD1F7B77090046DC18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7CAECBB1F7B77090046DC18 /* Main.storyboard */; };
@@ -71,6 +75,10 @@
 		D77D4BDA1F88016F0021D3B3 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
 		D78120E71F7F0B44007598B7 /* TimelineTweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineTweetCell.swift; sourceTree = "<group>"; };
 		D78120E91F7FF543007598B7 /* TweetDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailViewController.swift; sourceTree = "<group>"; };
+		D7B637F61F8AEB1F00F832C8 /* TwitterTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterTheme.swift; sourceTree = "<group>"; };
+		D7B637F81F8AEDFB00F832C8 /* TwitterScreenNameLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterScreenNameLabel.swift; sourceTree = "<group>"; };
+		D7B637FB1F8AF7C800F832C8 /* TwitterThemeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterThemeButton.swift; sourceTree = "<group>"; };
+		D7B637FD1F8B010300F832C8 /* TwitterBGView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterBGView.swift; sourceTree = "<group>"; };
 		D7CAECB41F7B77090046DC18 /* Twitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7CAECB71F7B77090046DC18 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D7CAECB91F7B77090046DC18 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +178,17 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		D7B637FA1F8AEECB00F832C8 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				D7B637F61F8AEB1F00F832C8 /* TwitterTheme.swift */,
+				D7B637F81F8AEDFB00F832C8 /* TwitterScreenNameLabel.swift */,
+				D7B637FB1F8AF7C800F832C8 /* TwitterThemeButton.swift */,
+				D7B637FD1F8B010300F832C8 /* TwitterBGView.swift */,
+			);
+			name = CustomViews;
+			sourceTree = "<group>";
+		};
 		D7CAECAB1F7B77090046DC18 = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +214,7 @@
 		D7CAECB61F7B77090046DC18 /* Twitter */ = {
 			isa = PBXGroup;
 			children = (
+				D7B637FA1F8AEECB00F832C8 /* CustomViews */,
 				D7DA8D911F80CBBA00347B88 /* Twitter.entitlements */,
 				D73648721F7C8B450088C79A /* Models */,
 				D736486D1F7B7BAE0088C79A /* API */,
@@ -533,13 +553,16 @@
 				D7DA8D951F81D19400347B88 /* TweeterUtility.swift in Sources */,
 				D78120E81F7F0B44007598B7 /* TimelineTweetCell.swift in Sources */,
 				D7FE02CF1F8A8AC100B20EAD /* AccountsViewController.swift in Sources */,
+				D7B637FE1F8B010300F832C8 /* TwitterBGView.swift in Sources */,
 				D7FE02CB1F8A019800B20EAD /* MentionsViewController.swift in Sources */,
 				D7CAECBA1F7B77090046DC18 /* ViewController.swift in Sources */,
 				D7113D991F880FFD0063E66A /* ProfileViewController.swift in Sources */,
 				D7E627EB1F806B8E00C54A26 /* TweetComposeViewController.swift in Sources */,
 				D7FE02D11F8A8C4000B20EAD /* AccountsCell.swift in Sources */,
 				D73648711F7B7E170088C79A /* TwitterClient.swift in Sources */,
+				D7B637F91F8AEDFB00F832C8 /* TwitterScreenNameLabel.swift in Sources */,
 				D7DA8D931F81C97F00347B88 /* Media.swift in Sources */,
+				D7B637FC1F8AF7C800F832C8 /* TwitterThemeButton.swift in Sources */,
 				D7113D971F880FC00063E66A /* MenuViewController.swift in Sources */,
 				D736492E1F7D4BB60088C79A /* TweetsViewController.swift in Sources */,
 				D7CAECB81F7B77090046DC18 /* AppDelegate.swift in Sources */,
@@ -548,6 +571,7 @@
 				D73648761F7C8B800088C79A /* User.swift in Sources */,
 				D7FE02C91F89F67300B20EAD /* MenuCell.swift in Sources */,
 				D73648741F7C8B730088C79A /* Tweet.swift in Sources */,
+				D7B637F71F8AEB1F00F832C8 /* TwitterTheme.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

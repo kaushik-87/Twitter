@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate , TweetComposeViewControllerDelegate , TweetCellDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate , TweetComposeViewControllerDelegate , TweetCellDelegate, UIGestureRecognizerDelegate {
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        return (self.tweets?.count)!
@@ -151,6 +151,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        self.navigationItem.titleView?.isUserInteractionEnabled = true
+//        let longPressGuestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressedOnNavigationBar))
+//        longPressGuestureRecognizer.delegate = self
+//        self.navigationItem.titleView?.addGestureRecognizer(longPressGuestureRecognizer)
+        
         refreshControl.backgroundColor = UIColor.clear
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         self.tweetsTableView.insertSubview(refreshControl, at: 0)
@@ -180,6 +185,14 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         // Do any additional setup after loading the view.
     }
     
+      func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool
+    {
+        return true
+    }
+    
+    func longPressedOnNavigationBar() -> Void {
+        print("LongpressRecognized")
+    }
     
     func accountsDidSwitchAccount() -> Void {
 //        loadTweetTimeLine()

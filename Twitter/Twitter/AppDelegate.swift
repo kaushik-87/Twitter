@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        window = UIWindow.init(frame: UIScreen.main.bounds)
 //        NotificationCenter.default.addObserver(self, selector: #selector(userDidLogout), name:
 //            NSNotification.Name(rawValue: userDidLogoutNotification), object: nil)
-        
+//        TwitterTheme.dark.apply()
+
         NotificationCenter.default.addObserver(self, selector: #selector(noLoggedInUser), name:
             NSNotification.Name(rawValue: accountManagerNoLoggedInUsersNotification), object: nil)
         

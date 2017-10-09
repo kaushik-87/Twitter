@@ -36,7 +36,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="DkU-OW-812">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2017 @ Kaushik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfE-2s-bZG">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2017 @ Kaushik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfE-2s-bZG" customClass="TwitterScreenNameLabel" customModule="Twitter" customModuleProvider="target">
                                 <rect key="frame" x="103.5" y="630" width="167" height="17"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="17" id="WOa-mx-crP"/>
@@ -45,7 +45,7 @@
                                 <color key="textColor" white="0.96999999999999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sM5-m2-WLt">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sM5-m2-WLt" customClass="TwitterThemeButton" customModule="Twitter" customModuleProvider="target">
                                 <rect key="frame" x="55" y="533" width="264" height="38"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -204,12 +204,6 @@
                                     <outlet property="delegate" destination="oG7-eF-H0o" id="ypd-IA-5Wt"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jc2-Zx-MIM">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <items>
-                                    <barButtonItem title="Item" id="aY8-uR-HDg"/>
-                                </items>
-                            </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nJu-pI-INK">
                                 <rect key="frame" x="0.0" y="20" width="375" height="126"/>
                                 <subviews>
@@ -229,7 +223,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Kaushik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcE-ge-l64">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Kaushik" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kcE-ge-l64" customClass="TwitterScreenNameLabel" customModule="Twitter" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="18.5" width="69" height="17.5"/>
                                                 <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                                 <color key="textColor" red="0.65733681509999997" green="0.65733681509999997" blue="0.65733681509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -247,19 +241,41 @@
                                     <constraint firstItem="6LL-zc-yNp" firstAttribute="top" secondItem="nJu-pI-INK" secondAttribute="top" constant="12" id="rRx-yU-th3"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FkW-Tl-7Ep">
+                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SpJ-sG-MTi" customClass="TwitterThemeButton" customModule="Twitter" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="6" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="4DT-3p-cAh"/>
+                                            <constraint firstAttribute="width" constant="30" id="hwn-WH-Nqc"/>
+                                        </constraints>
+                                        <state key="normal" image="nightMode"/>
+                                        <connections>
+                                            <action selector="toggleTheme:" destination="oG7-eF-H0o" eventType="touchUpInside" id="gsp-He-iZE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="SpJ-sG-MTi" secondAttribute="bottom" constant="8" id="G9I-vT-gSU"/>
+                                    <constraint firstItem="SpJ-sG-MTi" firstAttribute="leading" secondItem="FkW-Tl-7Ep" secondAttribute="leading" constant="16" id="RgJ-2k-FmV"/>
+                                    <constraint firstAttribute="height" constant="44" id="ZZu-Xa-z3q"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="FkW-Tl-7Ep" firstAttribute="leading" secondItem="9Eh-hB-qfQ" secondAttribute="leading" id="1M6-pY-aJj"/>
                             <constraint firstItem="QXl-q8-7a5" firstAttribute="top" secondItem="nJu-pI-INK" secondAttribute="bottom" id="1sY-WC-zv7"/>
-                            <constraint firstItem="jc2-Zx-MIM" firstAttribute="leading" secondItem="9Eh-hB-qfQ" secondAttribute="leading" id="3YO-bH-sCF"/>
                             <constraint firstItem="nJu-pI-INK" firstAttribute="leading" secondItem="9Eh-hB-qfQ" secondAttribute="leading" id="Fxi-kD-jjK"/>
+                            <constraint firstItem="kCn-ZB-rrs" firstAttribute="top" secondItem="FkW-Tl-7Ep" secondAttribute="bottom" id="IaP-hl-5Kj"/>
                             <constraint firstAttribute="trailing" secondItem="nJu-pI-INK" secondAttribute="trailing" id="J4w-Nh-hN5"/>
+                            <constraint firstAttribute="trailing" secondItem="FkW-Tl-7Ep" secondAttribute="trailing" id="Jxa-t0-Pan"/>
                             <constraint firstItem="nJu-pI-INK" firstAttribute="top" secondItem="daF-qs-cHS" secondAttribute="bottom" id="QE3-Wx-iaj"/>
                             <constraint firstItem="QXl-q8-7a5" firstAttribute="leading" secondItem="9Eh-hB-qfQ" secondAttribute="leading" id="a8W-ci-BJi"/>
                             <constraint firstAttribute="trailing" secondItem="QXl-q8-7a5" secondAttribute="trailing" id="eSl-hy-YYR"/>
                             <constraint firstItem="kCn-ZB-rrs" firstAttribute="top" secondItem="QXl-q8-7a5" secondAttribute="bottom" id="n24-pI-x8D"/>
-                            <constraint firstItem="kCn-ZB-rrs" firstAttribute="top" secondItem="jc2-Zx-MIM" secondAttribute="bottom" id="qJe-pz-gT4"/>
-                            <constraint firstAttribute="trailing" secondItem="jc2-Zx-MIM" secondAttribute="trailing" id="rEU-zv-gDn"/>
                         </constraints>
                     </view>
                     <connections>
@@ -293,15 +309,15 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="324"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Favorite" translatesAutoresizingMaskIntoConstraints="NO" id="zaM-KM-ZFu">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="95"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zaM-KM-ZFu">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
                                             <color key="backgroundColor" red="0.38831768129999999" green="0.38831768129999999" blue="0.38831768129999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="95" id="xJJ-f2-6Qp"/>
+                                                <constraint firstAttribute="height" constant="75" id="xJJ-f2-6Qp"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tHo-z5-hrb">
-                                            <rect key="frame" x="0.0" y="95" width="375" height="229"/>
+                                            <rect key="frame" x="0.0" y="75" width="375" height="249"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="verified" translatesAutoresizingMaskIntoConstraints="NO" id="t5B-Ud-ikO">
                                                     <rect key="frame" x="20" y="-50" width="100" height="100"/>
@@ -312,7 +328,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7V-Yu-g7D">
-                                                    <rect key="frame" x="0.0" y="58" width="375" height="126.5"/>
+                                                    <rect key="frame" x="0.0" y="58" width="375" height="146.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="k82-b4-ppY">
                                                             <rect key="frame" x="20" y="8" width="375" height="40"/>
@@ -369,7 +385,7 @@
                                                     </connections>
                                                 </pageControl>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nUU-NZ-FHc">
-                                                    <rect key="frame" x="10" y="192.5" width="301" height="16.5"/>
+                                                    <rect key="frame" x="10" y="212.5" width="301" height="16.5"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="GKI-QS-g44">
                                                             <rect key="frame" x="0.0" y="0.0" width="83.5" height="16.5"/>
@@ -475,6 +491,7 @@
                             <constraint firstItem="KuV-00-NcP" firstAttribute="leading" secondItem="Cod-i2-PEd" secondAttribute="leading" id="ddB-Hk-Efb"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="bannerImageHeightConstraint" destination="xJJ-f2-6Qp" id="Gob-FP-W8N"/>
@@ -728,21 +745,21 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wnh-uA-OUL">
                                                     <rect key="frame" x="78" y="328.5" width="281" height="30"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wk-yg-BcU">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0wk-yg-BcU" customClass="TwitterThemeButton" customModule="Twitter" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="5" width="93.5" height="20"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                             <state key="normal" image="Reply">
                                                                 <color key="titleColor" red="0.65733681505706709" green="0.65733681505706709" blue="0.65733681505706709" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWE-79-eR1">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kWE-79-eR1" customClass="TwitterThemeButton" customModule="Twitter" customModuleProvider="target">
                                                             <rect key="frame" x="93.5" y="0.0" width="94" height="30"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                             <state key="normal" image="Retweet_black">
                                                                 <color key="titleColor" red="0.65733681509999997" green="0.65733681509999997" blue="0.65733681509999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
                                                         </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmR-Ay-QaN">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hmR-Ay-QaN" customClass="TwitterThemeButton" customModule="Twitter" customModuleProvider="target">
                                                             <rect key="frame" x="187.5" y="5" width="93.5" height="20"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                                             <state key="normal" image="Favorite_black">
@@ -827,7 +844,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Home" id="i13-yM-wg2">
-                        <barButtonItem key="leftBarButtonItem" title="Profile" id="sSJ-R7-bpx">
+                        <barButtonItem key="leftBarButtonItem" id="sSJ-R7-bpx">
                             <color key="tintColor" red="0.4549019608" green="0.69019607839999997" blue="0.81568627449999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Compose" id="rl1-pm-rcS">
@@ -1291,13 +1308,13 @@
     </scenes>
     <resources>
         <image name="Compose" width="30" height="30"/>
-        <image name="Favorite" width="20" height="20"/>
         <image name="Favorite_black" width="20" height="20"/>
         <image name="Reply" width="20" height="20"/>
         <image name="Retweet_black" width="30" height="30"/>
         <image name="cross" width="25" height="25"/>
         <image name="downarrow" width="15" height="15"/>
         <image name="launchScreen" width="750" height="1333"/>
+        <image name="nightMode" width="30" height="30"/>
         <image name="retweet" width="15" height="15"/>
         <image name="verified" width="20" height="20"/>
     </resources>

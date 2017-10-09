@@ -117,6 +117,24 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
+    @IBAction func toggleTheme(_ sender: Any) {
+        
+        switch TwitterTheme.current {
+        case .dark:
+            if let selectedTheme = TwitterTheme(rawValue: 0) {
+                selectedTheme.apply()
+            }
+            break
+        default:
+            if let selectedTheme = TwitterTheme(rawValue: 1) {
+                selectedTheme.apply()
+            }
+        }
+        self.view?.window?.subviews.forEach({ (view: UIView) in
+            view.removeFromSuperview()
+            self.view?.window?.addSubview(view)
+        })
+    }
 
     @IBOutlet weak var action: UIButton!
     

@@ -140,7 +140,7 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let size = self.profileHeaderView.systemLayoutSizeFitting(UILayoutFittingCompressedSize)
 
-        let newSize = CGSize(width: size.width, height: size.height + self.descriptionScrollView.contentSize.height)
+        let newSize = CGSize(width: size.width, height: size.height + self.descriptionScrollView.contentSize.height + 20)
         
         if self.profileHeaderView.frame.size.height != newSize.height {
             self.profileHeaderView.frame.size.height = newSize.height
@@ -255,10 +255,8 @@ class ProfileViewController: UIViewController, UITableViewDelegate, UITableViewD
 //            print("\(self.bannerImageHeightConstraint.constant)")
             self.profileHeaderView.layoutIfNeeded()
             
-           
-        }
-
-        if (scrollView.contentOffset.y >= -18) {
+           //(scrollView.contentOffset.y >= -18)
+        }else  {
             let avatarScaleFactor = (min(offset_HeaderStop, scrollView.contentOffset.y)) / self.profileImageView.bounds.height / 1.4 // Slow down the animation
             print("scale factor \(avatarScaleFactor)")
             let avatarSizeVariation = ((self.profileImageView.bounds.height * (1.0 + avatarScaleFactor)) - self.profileImageView.bounds.height) / 2.0
