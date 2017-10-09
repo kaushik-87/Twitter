@@ -130,9 +130,12 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
                 selectedTheme.apply()
             }
         }
-        self.view?.window?.subviews.forEach({ (view: UIView) in
+        
+
+        let window  = UIApplication.shared.keyWindow
+        window?.subviews.forEach({ (view: UIView) in
             view.removeFromSuperview()
-            self.view?.window?.addSubview(view)
+            window?.addSubview(view)
         })
     }
 
@@ -165,7 +168,7 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func userDidLogin() -> Void {
-        
+        toggleTheme(Any)
         loadMenuViewForUser()
     }
     

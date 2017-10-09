@@ -51,7 +51,9 @@ enum TwitterTheme : Int {
         case .default:
             return UIColor.white
         case .dark:
-            return UIColor(red:0.11, green:0.16, blue:0.17, alpha:1.0)
+            return UIColor(red:0.11, green:0.15, blue:0.22, alpha:1.0)
+                //UIColor(red:0.00, green:0.20, blue:0.40, alpha:1.0)
+                //UIColor(red:0.11, green:0.16, blue:0.17, alpha:1.0)
         }
     }
     
@@ -122,9 +124,13 @@ enum TwitterTheme : Int {
 //        UISwitch.appearance().onTintColor = mainColor.withAlphaComponent(0.3)
 //        UISwitch.appearance().thumbTintColor = mainColor
         
+//        UISegmentedControl.appearance().backgroundColor = screenNameColor
+        UISegmentedControl.appearance().tintColor = backgroundColor
         UITableViewCell.appearance().backgroundColor = backgroundColor
-        UIView.appearance().backgroundColor = backgroundColor
+        TwitterBGView.appearance().backgroundColor = backgroundColor
         UITextView.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).textColor = textColor
+        UITextView.appearance(whenContainedInInstancesOf: [ProfileViewController.self]).textColor = textColor
+
 //        UILabel.appearance(whenContainedInInstancesOf: [UITableViewCell.self]).textColor = textColor
         UILabel.appearance().textColor = textColor
         TwitterScreenNameLabel.appearance().textColor = screenNameColor
