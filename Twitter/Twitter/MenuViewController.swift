@@ -168,7 +168,15 @@ class MenuViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func userDidLogin() -> Void {
-        toggleTheme(Any)
+        TwitterTheme.default.apply()
+        let window  = UIApplication.shared.keyWindow
+        window?.subviews.forEach({ (view: UIView) in
+            view.removeFromSuperview()
+            window?.addSubview(view)
+        })
+
+        
+        
         loadMenuViewForUser()
     }
     
